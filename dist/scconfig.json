@@ -13,21 +13,12 @@
   "dependencies": {
     "@ijstech/eth-wallet-web3modal": "{LIB}/lib/eth-wallet-web3modal/index.js",
     "@openswap/sdk": "{root}/sdks/sdk/index.js",
-    "@validapp/bakery-swap-sdk": "{root}/sdks/bakery-swap-sdk/index.js",
-    "@validapp/trader-joe-sdk": "{root}/sdks/trader-joe-sdk/index.js",
-    "@scom/impossible-swap-sdk": "{root}/sdks/impossible-swap-sdk/index.js",
-    "@validapp/cross-chain-token-sdk": "{root}/sdks/cross-chain-token-sdk/index.js",
     "@validapp/chainlink-sdk": "{root}/sdks/chainlink-sdk/index.js",
-    "@validapp/time-is-money-sdk": "{root}/sdks/time-is-money-sdk/index.js",
-    "@openswap/troll-nft-sdk": "{root}/sdks/troll-nft-sdk/index.js",
-    "@validapp/drip-sdk": "{root}/sdks/drip-sdk/index.js",
     "@openswap/oracle-adaptor-sdk": "{root}/sdks/oracle-adaptor-sdk/index.js",
-    "@ijstech/cross-chain-bridge": "{root}/sdks/cross-chain-bridge/index.js",
     "@buyback/assets": "{root}/assets/index.js",
     "@buyback/global": "{root}/global/index.js",
     "@buyback/store": "{root}/store/index.js",
     "@buyback/queue-utils": "{root}/queue-utils/index.js",
-    "@buyback/crosschain-utils": "{root}/crosschain-utils/index.js",
     "@buyback/swap-utils": "{root}/swap-utils/index.js"
   }
 }

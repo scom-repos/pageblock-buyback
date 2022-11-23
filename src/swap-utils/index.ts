@@ -8,7 +8,5 @@ export {
   setERC20AllowanceToZero,
   getApprovalModelAction,
   setApprovalModalSpenderAddress,
-  createBridgeVaultOrder,
-  getAvailableRouteOptions,
   registerPairsByAddress,
 } from './API';

@@ -502,7 +502,7 @@ export class BuybackBlock extends Module implements PageBlock {
 		}
 		this.noCampaignSection.clearInnerHTML();
 		this.noCampaignSection.appendChild(
-			<i-panel class="no-buyback" height="100%" background={{ color: '#192046' }}>
+			<i-panel class="no-buyback" height="100%" background={{ color: '#0c1234' }}>
 				<i-vstack gap={10} verticalAlignment="center">
 					<i-image url={Assets.fullPath('img/staking/TrollTrooper.svg')} />
 					<i-label font={{ color: '#FFFFFF' }} caption={ isConnected ? 'No Buybacks' : 'Please connect with your wallet!' } />

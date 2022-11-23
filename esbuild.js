@@ -8,44 +8,12 @@ const SDKList = [
     path: './node_modules/@openswap/sdk/dist/index.js'
   },
   {
-    name: 'bakery-swap-sdk',
-    path: './node_modules/@validapp/bakery-swap-sdk/dist/index.js'
-  },
-  {
-    name: 'trader-joe-sdk',
-    path: './node_modules/@validapp/trader-joe-sdk/dist/index.js'
-  },
-  {
-    name: 'impossible-swap-sdk',
-    path: './node_modules/@scom/impossible-swap-sdk/dist/index.js'
-  },
-  {
-    name: 'cross-chain-token-sdk',
-    path: './node_modules/@validapp/cross-chain-token-sdk/dist/index.js'
-  },
-  {
     name: 'chainlink-sdk',
     path: './node_modules/@validapp/chainlink-sdk/dist/index.js'
   },
   {
-    name: 'time-is-money-sdk',
-    path: './node_modules/@validapp/time-is-money-sdk/dist/index.js'
-  },
-  {
-    name: 'troll-nft-sdk',
-    path: './node_modules/@openswap/troll-nft-sdk/dist/index.js'
-  },
-  {
-    name: 'drip-sdk',
-    path: './node_modules/@validapp/drip-sdk/dist/index.js'
-  },
-  {
     name: 'oracle-adaptor-sdk',
     path: './node_modules/@openswap/oracle-adaptor-sdk/dist/index.js'
-  },
-  {
-    name: 'cross-chain-bridge',
-    path: './node_modules/@ijstech/cross-chain-bridge/dist/index.js'
   }
 ]
 
@@ -64,11 +32,6 @@ const GlobalBuildModuleList = [
     sourceFilePath: 'src/store/index.ts',
     distFilePath: './dist/store/index.js',
     moduleName: '@buyback/store'
-  },
-  {
-    sourceFilePath: 'src/crosschain-utils/index.ts',
-    distFilePath: './dist/crosschain-utils/index.js',
-    moduleName: '@buyback/crosschain-utils'
   },
   {
     sourceFilePath: 'src/queue-utils/index.ts',
@@ -99,16 +62,11 @@ const GlobalModuleESBuildConfig = {
     '@validapp/bakery-swap-sdk',
     '@validapp/trader-joe-sdk',
     '@scom/impossible-swap-sdk',
-    '@validapp/cross-chain-token-sdk',
     '@validapp/chainlink-sdk',
     '@validapp/time-is-money-sdk',
-    '@openswap/troll-nft-sdk',
     '@openswap/oracle-adaptor-sdk',
-    '@validapp/drip-sdk',
-    '@ijstech/cross-chain-bridge',
     '@buyback/queue-utils',
     '@buyback/swap-utils',
-    '@buyback/crosschain-utils',
     '@buyback/buyback',
     ...Object.keys(dependencies)
   ]
@@ -128,16 +86,11 @@ const LocalModuleESBuildConfig = {
     '@validapp/bakery-swap-sdk',
     '@validapp/trader-joe-sdk',
     '@scom/impossible-swap-sdk',
-    '@validapp/cross-chain-token-sdk',
     '@validapp/chainlink-sdk',
     '@validapp/time-is-money-sdk',
-    '@openswap/troll-nft-sdk',
     '@openswap/oracle-adaptor-sdk',
-    '@validapp/drip-sdk',
-    '@ijstech/cross-chain-bridge',
     '@buyback/queue-utils',
     '@buyback/swap-utils',
-    '@buyback/crosschain-utils',
     '@buyback/buyback',
     ...Object.keys(dependencies)
   ]

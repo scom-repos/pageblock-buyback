@@ -3739,30 +3739,13 @@ var require_moment = __commonJS({
 
 // src/queue-utils/index.ts
 __export(exports, {
-  addLiquidityToGroupQueue: () => addLiquidityToGroupQueue,
-  approveLPMax: () => approveLPMax,
-  approvePairMax: () => approvePairMax,
-  convertGroupQueueWhitelistedAddresses: () => convertGroupQueueWhitelistedAddresses,
-  creatGroupQueuePair: () => creatGroupQueuePair,
-  getApprovalModelAction: () => getApprovalModelAction,
-  getEstimatedAmountInUSD: () => getEstimatedAmountInUSD,
   getGroupQueuePairInfo: () => getGroupQueuePairInfo,
   getGroupQueueTraderDataObj: () => getGroupQueueTraderDataObj,
   getGuaranteedBuyBackInfo: () => getGuaranteedBuyBackInfo,
   getLatestOraclePrice: () => getLatestOraclePrice,
-  getLatestOraclePriceAlt: () => getLatestOraclePriceAlt,
   getLiquidityProviderAddress: () => getLiquidityProviderAddress,
   getPair: () => getPair,
-  getPriceByAmmReserve: () => getPriceByAmmReserve,
-  getProviderGroupQueues: () => getProviderGroupQueues,
-  getQueueInfoObj: () => getQueueInfoObj,
-  getQueueStakeToken: () => getQueueStakeToken,
-  getRangeQueueData: () => getRangeQueueData,
-  getToBeApprovedTokens: () => getToBeApprovedTokens,
-  getTraderGroupQueues: () => getTraderGroupQueues,
-  isGroupQueueOracleSupported: () => isGroupQueueOracleSupported,
-  isPairApprovedForStakeToken: () => isPairApprovedForStakeToken,
-  removeLiquidityFromGroupQueue: () => removeLiquidityFromGroupQueue
+  getRangeQueueData: () => getRangeQueueData
 });
 
 // src/queue-utils/API.ts
@@ -3773,29 +3756,17 @@ var import_sdk = __toModule(require("@openswap/sdk"));
 var import_chainlink_sdk = __toModule(require("@validapp/chainlink-sdk"));
 var import_oracle_adaptor_sdk = __toModule(require("@openswap/oracle-adaptor-sdk"));
 var import_moment = __toModule(require_moment());
-var isFactory2Applied = true;
-var OracleFactory = isFactory2Applied ? import_global.ABIKeys.OracleFactory : import_global.ABIKeys.Factory;
 var ConfigStore = import_global.ABIKeys.ConfigStore;
-var INFINITE = new import_eth_wallet.BigNumber("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-var Address = (0, import_store.getAddresses)((0, import_store.getChainId)());
 var getWETH = (chainId) => {
   let wrappedToken = import_store.WETHByChainId[chainId];
   return wrappedToken;
 };
 var getAddressByKey = (key) => {
-  let Address2 = (0, import_store.getAddresses)((0, import_store.getChainId)());
-  return Address2[key];
-};
-var getOracleRouterAddress = () => {
-  let Address2 = (0, import_store.getAddresses)((0, import_store.getChainId)());
-  let routerAddress = Address2["OSWAP_OracleRouter"];
-  return routerAddress;
+  let Address = (0, import_store.getAddresses)((0, import_store.getChainId)());
+  return Address[key];
 };
 function toTokenAmount(token, amount) {
   return (import_eth_wallet.BigNumber.isBigNumber(amount) ? amount : new import_eth_wallet.BigNumber(amount.toString())).shiftedBy(Number(token.decimals)).decimalPlaces(0, import_eth_wallet.BigNumber.ROUND_FLOOR);
-}
-function toWei(amount) {
-  return (import_eth_wallet.BigNumber.isBigNumber(amount) ? amount : new import_eth_wallet.BigNumber(amount.toString())).shiftedBy(18).decimalPlaces(0);
 }
 var getTokenPrice = async (token) => {
   var _a;
@@ -3850,13 +3821,6 @@ var getTokenPrice = async (token) => {
     }
   }
   return tokenPrice;
-};
-var getQueueStakeToken = () => {
-  let chainId = (0, import_store.getChainId)();
-  if (!import_store.DefaultTokens[chainId])
-    return null;
-  let stakeToken = import_store.DefaultTokens[chainId].find((v) => v.symbol == "OSWAP");
-  return stakeToken ? __spreadProps(__spreadValues({}, stakeToken), { address: stakeToken.address.toLowerCase() }) : null;
 };
 var mapTokenObjectSet = (obj) => {
   var _a;
@@ -3928,70 +3892,6 @@ var getPair = async (queueType, tokenA, tokenB) => {
     case import_global.QueueType.GROUP_QUEUE:
       let groupQ = new import_sdk.Contracts.OSWAP_RestrictedFactory(wallet, factoryAddress);
       return await groupQ.getPair(__spreadProps(__spreadValues({}, params), { param3: 0 }));
-  }
-};
-var getQueueInfoObj = async (queueType, tokenA, tokenB) => {
-  try {
-    let tokens = mapTokenObjectSet({ tokenA, tokenB });
-    let address = await getPair(queueType, tokens.tokenA, tokens.tokenB);
-    if (address == import_eth_wallet.Utils.nullAddress) {
-      return null;
-    }
-    let direction = new import_eth_wallet.BigNumber(tokens.tokenA.address.toLowerCase()).lt(tokens.tokenB.address.toLowerCase());
-    let wallet = (0, import_store.getWallet)();
-    let amounts = [];
-    let queueSize = new import_eth_wallet.BigNumber("0");
-    let expiryDates = [];
-    let lowerLimits = [];
-    let upperLimits = [];
-    switch (queueType) {
-      case import_global.QueueType.RANGE_QUEUE:
-        let rangePair = new import_sdk.Contracts.OSWAP_RangePair(wallet, address);
-        queueSize = await rangePair.counter();
-        let rangeQ = await rangePair.getOffers({ direction, start: 0, end: queueSize });
-        amounts = rangeQ.amountAndReserve.slice(0, rangeQ.amountAndReserve.length / 2);
-        expiryDates = rangeQ.startDateAndExpire.slice(rangeQ.startDateAndExpire.length / 2, rangeQ.startDateAndExpire.length);
-        lowerLimits = rangeQ.lowerLimitAndUpperLimit.slice(0, rangeQ.lowerLimitAndUpperLimit.length / 2);
-        upperLimits = rangeQ.lowerLimitAndUpperLimit.slice(rangeQ.lowerLimitAndUpperLimit.length / 2, rangeQ.lowerLimitAndUpperLimit.length);
-        break;
-      case import_global.QueueType.PRIORITY_QUEUE:
-      case import_global.QueueType.PEGGED_QUEUE:
-        let priorityPair = new import_sdk.Contracts.OSWAP_OraclePair(wallet, address);
-        queueSize = await priorityPair.queueSize(direction);
-        let priorityQ = await priorityPair.getQueue({ direction, start: 0, end: queueSize });
-        amounts = priorityQ.amount;
-        expiryDates = priorityQ.expire;
-        break;
-      case import_global.QueueType.GROUP_QUEUE:
-        break;
-    }
-    if (amounts.length <= 0)
-      return null;
-    let tradeFeeObj = getTradeFee(queueType);
-    const price = await getLatestOraclePrice(queueType, tokens.tokenB, tokens.tokenA);
-    const priceSwap = await getLatestOraclePrice(queueType, tokens.tokenA, tokens.tokenB);
-    let totalLiquidity = new import_eth_wallet.BigNumber(0);
-    for (let i = 0; i < amounts.length; i++) {
-      let expire = expiryDates[i].toNumber() * 1e3;
-      if ((0, import_moment.default)(expire).isBefore((0, import_moment.default)()))
-        continue;
-      if (lowerLimits.length > 0 && upperLimits.length > 0) {
-        if (lowerLimits[i] && lowerLimits[i].gt(priceSwap))
-          continue;
-        if (lowerLimits[i] && upperLimits[i].gt(0) && upperLimits[i].lt(priceSwap))
-          continue;
-      }
-      totalLiquidity = totalLiquidity.plus(amounts[i]);
-    }
-    return {
-      price,
-      priceSwap,
-      totalLiquidity: totalLiquidity.toFixed(),
-      tradeFeeObj,
-      pair: address
-    };
-  } catch (error) {
-    return null;
   }
 };
 var getGroupQueueItemsForTrader = async (pairAddress, tokenIn, tokenOut) => {
@@ -4124,131 +4024,6 @@ var getGroupQueueTraderDataObj = async (pairAddress, tokenIn, tokenOut, amountIn
     tradeFeeObj
   };
 };
-var getProviderGroupQueues = async (provider) => {
-  let wallet = (0, import_store.getWallet)();
-  let chainId = (0, import_store.getChainId)();
-  const factoryAddress = getFactoryAddress(import_global.QueueType.GROUP_QUEUE);
-  const factory = new import_sdk.Contracts.OSWAP_RestrictedFactory(wallet, factoryAddress);
-  const nativeToken = (0, import_store.getChainNativeToken)(chainId);
-  const WETH9Address = getAddressByKey("WETH9");
-  let pairs = [];
-  const getProviderGroupQueueInfo = async (pairAddress, token0, token1, direction) => {
-    let promises2 = [];
-    const oraclePair = new import_sdk.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
-    let offer = await oraclePair.getProviderOffer({ provider, direction, start: 0, length: 100 });
-    let amounts = offer.amountAndPrice.slice(0, offer.amountAndPrice.length / 2);
-    let prices = offer.amountAndPrice.slice(offer.amountAndPrice.length / 2, offer.amountAndPrice.length);
-    let startDates = offer.startDateAndExpire.slice(0, offer.startDateAndExpire.length / 2);
-    let endDates = offer.startDateAndExpire.slice(offer.startDateAndExpire.length / 2, offer.startDateAndExpire.length);
-    let lockedArr = offer.lockedAndAllowAll.slice(0, offer.lockedAndAllowAll.length / 2);
-    let allowAllArr = offer.lockedAndAllowAll.slice(offer.lockedAndAllowAll.length / 2, offer.lockedAndAllowAll.length);
-    for (let i = 0; i < amounts.length; i++) {
-      promises2.push(new Promise(async (resolve, reject) => {
-        try {
-          let offerIndex = offer.index[i];
-          let approvedTraderLength = (await oraclePair.getApprovedTraderLength({ direction, offerIndex })).toNumber();
-          let addresses = [];
-          let totalAllocation = new import_eth_wallet.BigNumber("0");
-          for (let j = 0; j < approvedTraderLength; j += 100) {
-            let approvedTrader = await oraclePair.getApprovedTrader({ direction, offerIndex, start: j, length: 100 });
-            addresses.push(...approvedTrader.trader.map((v, i2) => {
-              let allocation = new import_eth_wallet.BigNumber(approvedTrader.allocation[i2]).shiftedBy(-Number(token0.decimals)).toFixed();
-              totalAllocation = totalAllocation.plus(allocation);
-              return {
-                address: v,
-                allocation
-              };
-            }));
-          }
-          let price = (0, import_global.toWeiInv)(new import_eth_wallet.BigNumber(prices[i]).shiftedBy(-18).toFixed()).shiftedBy(-18).toFixed();
-          let data = {
-            pairAddress: pairAddress.toLowerCase(),
-            fromTokenAddress: token0.address.toLowerCase() == WETH9Address.toLowerCase() ? nativeToken.symbol : token0.address.toLowerCase(),
-            toTokenAddress: token1.address.toLowerCase() == WETH9Address.toLowerCase() ? nativeToken.symbol : token1.address.toLowerCase(),
-            amount: new import_eth_wallet.BigNumber(amounts[i]).shiftedBy(-Number(token0.decimals)).toFixed(),
-            offerPrice: price,
-            startDate: startDates[i].toNumber() * 1e3,
-            endDate: endDates[i].toNumber() * 1e3,
-            state: lockedArr[i] ? "Locked" : "Unlocked",
-            allowAll: allowAllArr[i],
-            direct: true,
-            offerIndex,
-            addresses,
-            allocation: totalAllocation.toFixed(),
-            willGet: new import_eth_wallet.BigNumber(amounts[i]).times(new import_eth_wallet.BigNumber(price)).shiftedBy(-Number(token0.decimals)).toFixed()
-          };
-          pairs.push(data);
-        } catch (err) {
-        }
-        resolve();
-      }));
-    }
-    return promises2;
-  };
-  let allPairsLength = (await factory.allPairsLength()).toNumber();
-  let promises = [];
-  for (let i = 0; i < allPairsLength; i++) {
-    let pairAddress = await factory.allPairs(i);
-    const oraclePair = new import_sdk.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
-    let token0Address = await oraclePair.token0();
-    let token1Address = await oraclePair.token1();
-    let token0 = getTokenObjectByAddress(token0Address);
-    let token1 = getTokenObjectByAddress(token1Address);
-    let inverseDirection = new import_eth_wallet.BigNumber(token0Address.toLowerCase()).lt(token1Address.toLowerCase());
-    let directDirection = !inverseDirection;
-    let directOfferIndexLength = await oraclePair.getProviderOfferIndexLength({ provider, direction: directDirection });
-    let inverseOfferIndexLength = await oraclePair.getProviderOfferIndexLength({ provider, direction: inverseDirection });
-    if (new import_eth_wallet.BigNumber(directOfferIndexLength).gt(0)) {
-      let directQueuePromises = await getProviderGroupQueueInfo(pairAddress, token0, token1, directDirection);
-      promises.push(...directQueuePromises);
-    }
-    if (new import_eth_wallet.BigNumber(inverseOfferIndexLength).gt(0)) {
-      let inverseQueuePromises = await getProviderGroupQueueInfo(pairAddress, token1, token0, inverseDirection);
-      promises.push(...inverseQueuePromises);
-    }
-  }
-  await Promise.all(promises);
-  return pairs;
-};
-var getTraderGroupQueues = async () => {
-  let wallet = (0, import_store.getWallet)();
-  let chainId = (0, import_store.getChainId)();
-  const nativeToken = (0, import_store.getChainNativeToken)(chainId);
-  const factoryAddress = getFactoryAddress(import_global.QueueType.GROUP_QUEUE);
-  const factory = new import_sdk.Contracts.OSWAP_RestrictedFactory(wallet, factoryAddress);
-  let pairs = [];
-  let allPairsLength = (await factory.allPairsLength()).toNumber();
-  const WETH9Address = getAddressByKey("WETH9");
-  for (let i = 0; i < allPairsLength; i++) {
-    let pairAddress = await factory.allPairs(i);
-    const pairContract = new import_sdk.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
-    let token0Address = await pairContract.token0();
-    let token1Address = await pairContract.token1();
-    let token0 = getTokenObjectByAddress(token0Address);
-    let token1 = getTokenObjectByAddress(token1Address);
-    let directQueueArr = await getGroupQueueItemsForTrader(pairAddress, token0, token1);
-    let directQueueAll = await getGroupQueueItemsForAllowAll(pairAddress, token0, token1);
-    let inversQueueArr = await getGroupQueueItemsForTrader(pairAddress, token1, token0);
-    let inversQueueAll = await getGroupQueueItemsForAllowAll(pairAddress, token1, token0);
-    pairs.push(...directQueueArr, ...directQueueAll, ...inversQueueArr, ...inversQueueAll);
-  }
-  let constantInfo = import_store.GuaranteedBuyBackCampaignInfo;
-  let info = constantInfo[chainId];
-  if (info) {
-    for (let i = 0; i < info.length; i++) {
-      let tokenIn = info[i].tokenIn.toLowerCase() == WETH9Address.toLowerCase() ? nativeToken.symbol : info[i].tokenIn;
-      let tokenOut = info[i].tokenOut.toLowerCase() == WETH9Address.toLowerCase() ? nativeToken.symbol : info[i].tokenOut;
-      pairs.find(function(offer, index) {
-        var _a;
-        if (offer.pairAddress.toLowerCase() == ((_a = info[i].pairAddress) == null ? void 0 : _a.toLowerCase()) && offer.tokenIn.toLowerCase() == tokenOut.toLowerCase() && offer.tokenOut.toLowerCase() == tokenIn.toLowerCase() && offer.index.toNumber() == info[i].offerIndex) {
-          offer.buyback = true;
-          offer.projectName = info[i].projectName;
-        }
-      });
-    }
-  }
-  return pairs;
-};
 var getGroupQueueAllocation = async (traderAddress, offerIndex, pairAddress, tokenIn, tokenOut) => {
   let direction = new import_eth_wallet.BigNumber(tokenIn.address.toLowerCase()).lt(tokenOut.address.toLowerCase());
   return await new import_sdk.Contracts.OSWAP_RestrictedPair((0, import_store.getWallet)(), pairAddress).traderAllocation({ param1: direction, param2: offerIndex, param3: traderAddress });
@@ -4270,41 +4045,6 @@ var getLatestOraclePrice = async (queueType, token, againstToken) => {
   } catch (err) {
     console.log("Fail to get latest price from oracle");
   }
-  return price;
-};
-var getLatestOraclePriceAlt = async (token, againstToken) => {
-  let wallet = (0, import_store.getWallet)();
-  let tokens = mapTokenObjectSet({ token, againstToken });
-  let price = "0";
-  try {
-    let oracleRouterAddress = getOracleRouterAddress();
-    let oracleRouter = new import_sdk.Contracts.OSWAP_OracleRouter(wallet, oracleRouterAddress);
-    let ammFactory = await oracleRouter.ammFactory();
-    let factory = new import_sdk.Contracts.OSWAP_Factory(wallet, ammFactory);
-    let pairAddress = await factory.getPair({ param1: tokens.token.address, param2: tokens.againstToken.address });
-    price = await getPriceByAmmReserve(pairAddress, tokens.token, tokens.againstToken);
-  } catch (err) {
-    console.log("Failed to get AMM price");
-    console.log(err);
-  }
-  return price;
-};
-var getPriceByAmmReserve = async (pairAddress, token, againstToken) => {
-  let reserveObj;
-  let wallet = (0, import_store.getWallet)();
-  let reserves = await new import_sdk.Contracts.OSWAP_Pair(wallet, pairAddress).getReserves();
-  if (new import_eth_wallet.BigNumber(token.address.toLowerCase()).lt(againstToken.address.toLowerCase())) {
-    reserveObj = {
-      reserveA: reserves._reserve0.shiftedBy(-token.decimals),
-      reserveB: reserves._reserve1.shiftedBy(-againstToken.decimals)
-    };
-  } else {
-    reserveObj = {
-      reserveA: reserves._reserve1.shiftedBy(-token.decimals),
-      reserveB: reserves._reserve0.shiftedBy(-againstToken.decimals)
-    };
-  }
-  let price = new import_eth_wallet.BigNumber(reserveObj.reserveB).div(reserveObj.reserveA).toFixed();
   return price;
 };
 var getRestrictedPairCustomParams = async () => {
@@ -4397,210 +4137,6 @@ var getGroupQueuePairInfo = async (pairAddress, tokenAddress, provider, offerInd
     returnObj = __spreadValues(__spreadValues({}, returnObj), providerQueuePairInfo);
   }
   return returnObj;
-};
-var getToBeApprovedTokens = async (queueType, tokenObj, amount, stake) => {
-  const WETH9Address = getAddressByKey("WETH9");
-  let tokens = mapTokenObjectSet({ tokenObj });
-  let tokenList = [];
-  const liqProviderAddress = getLiquidityProviderAddress(queueType);
-  if (tokens.tokenObj.address.toLowerCase() != WETH9Address.toLowerCase()) {
-    let allowance = await getTokenAllowance(tokens.tokenObj.address, tokens.tokenObj.decimals, liqProviderAddress);
-    if (new import_eth_wallet.BigNumber(amount).gt(allowance))
-      tokenList.push(tokens.tokenObj.address.toLowerCase());
-  }
-  if (new import_eth_wallet.BigNumber(stake).gt(0)) {
-    let StakeToken = getQueueStakeToken();
-    if (!StakeToken || !StakeToken.address)
-      return tokenList;
-    let allowance = await getTokenAllowance(StakeToken.address, StakeToken.decimals, liqProviderAddress);
-    if (new import_eth_wallet.BigNumber(stake).gt(allowance))
-      tokenList.push(StakeToken.address.toLowerCase());
-  }
-  return tokenList;
-};
-var isPairApprovedForStakeToken = async (pairAddress) => {
-  let StakeToken = getQueueStakeToken();
-  if (!StakeToken || !StakeToken.address)
-    return true;
-  let allowance = await getTokenAllowance(StakeToken.address, StakeToken.decimals, pairAddress);
-  return allowance.gt(0);
-};
-var getTokenAllowance = async (tokenAddress, tokenDecimals, contractAddress) => {
-  let wallet = (0, import_store.getWallet)();
-  const selectedAddress = wallet.address;
-  const ERC20 = new import_sdk.Contracts.ERC20(wallet, tokenAddress);
-  let allowance = await ERC20.allowance({ owner: selectedAddress, spender: contractAddress });
-  return allowance.shiftedBy(-tokenDecimals);
-};
-var approveLPMax = async (queueType, tokenObj, callback, confirmationCallback) => {
-  let amount = INFINITE;
-  let receipt = await new import_sdk.Contracts.ERC20((0, import_store.getWallet)(), tokenObj.address).approve({ spender: getLiquidityProviderAddress(queueType), amount });
-  return receipt;
-};
-var getEstimatedAmountInUSD = async (tokenObj, amount) => {
-  let tokens = mapTokenObjectSet({ tokenObj });
-  let tokenPrice = await getTokenPrice(tokens.tokenObj.address.toLowerCase());
-  return tokenPrice != null ? new import_eth_wallet.BigNumber(amount).times(tokenPrice).toFixed() : new import_eth_wallet.BigNumber(amount).toFixed();
-};
-var approvePairMax = async (pairAddress, callback, confirmationCallback) => {
-  let amount = INFINITE;
-  let StakeToken = getQueueStakeToken();
-  let receipt = await new import_sdk.Contracts.ERC20((0, import_store.getWallet)(), StakeToken.address).approve({ spender: pairAddress, amount });
-  return receipt;
-};
-var removeLiquidityFromGroupQueue = async (tokenA, tokenB, toAddress, tokenOut, amountOut, receivingOut, orderIndex, deadline, callback, confirmationCallback) => {
-  let address = getLiquidityProviderAddress(import_global.QueueType.GROUP_QUEUE);
-  const liquidityProviderContract = new import_sdk.Contracts.OSWAP_RestrictedLiquidityProvider((0, import_store.getWallet)(), address);
-  let receivingToken = tokenA.address == tokenOut.address ? tokenB : tokenA;
-  if (!amountOut)
-    amountOut = "0";
-  if (!receivingOut)
-    receivingOut = "0";
-  if (!tokenA.address || !tokenB.address) {
-    let erc20Token = tokenA.address ? tokenA : tokenB;
-    var receipt = await liquidityProviderContract.removeLiquidityETH({
-      tokenA: erc20Token.address,
-      removingTokenA: erc20Token == tokenOut,
-      to: toAddress,
-      pairIndex: 0,
-      offerIndex: orderIndex,
-      amountOut: toTokenAmount(tokenOut, amountOut),
-      receivingOut: toTokenAmount(receivingToken, receivingOut),
-      deadline
-    });
-  } else {
-    var receipt = await liquidityProviderContract.removeLiquidity({
-      tokenA: tokenA.address,
-      tokenB: tokenB.address,
-      removingTokenA: tokenA == tokenOut,
-      to: toAddress,
-      pairIndex: 0,
-      offerIndex: orderIndex,
-      amountOut: toTokenAmount(tokenOut, amountOut),
-      receivingOut: toTokenAmount(receivingToken, receivingOut),
-      deadline
-    });
-  }
-  return receipt;
-};
-var addLiquidityToGroupQueue = async (pairAddress, tokenA, tokenB, tokenIn, pairIndex, offerIndex, amountIn, allowAll, restrictedPrice, startDate, expire, deadline, whitelistAddress) => {
-  let receipt;
-  let trader = [];
-  let allocation = [];
-  whitelistAddress.map((v) => {
-    if (v.allocation != v.oldAllocation) {
-      trader.push(v.address);
-      allocation.push(toTokenAmount(tokenIn, v.allocation));
-    }
-  });
-  const liquidityContract = new import_sdk.Contracts.OSWAP_RestrictedLiquidityProvider((0, import_store.getWallet)(), getLiquidityProviderAddress(import_global.QueueType.GROUP_QUEUE));
-  const getReceipt = async (param, value) => {
-    if (trader.length == 0) {
-      receipt = value !== void 0 ? await liquidityContract.addLiquidityETH(param, value) : await liquidityContract.addLiquidityETH(param, 0);
-    } else {
-      const params = {
-        param: [
-          new import_eth_wallet.BigNumber(param.tokenA.toLowerCase()),
-          param.addingTokenA ? 1 : 0,
-          param.pairIndex,
-          param.offerIndex,
-          param.amountAIn,
-          param.allowAll ? 1 : 0,
-          param.restrictedPrice,
-          param.startDate,
-          param.expire,
-          param.deadline
-        ],
-        trader,
-        allocation
-      };
-      receipt = value !== void 0 ? await liquidityContract.addLiquidityETHAndTrader(params, value) : await liquidityContract.addLiquidityETHAndTrader(params, 0);
-    }
-  };
-  if (!tokenA.address || !tokenB.address) {
-    let erc20Token = tokenA.address ? tokenA : tokenB;
-    if (!tokenIn.address) {
-      getReceipt({
-        tokenA: erc20Token.address,
-        addingTokenA: false,
-        pairIndex,
-        offerIndex,
-        amountAIn: toWei(amountIn),
-        allowAll,
-        restrictedPrice: toWei(restrictedPrice),
-        startDate,
-        expire,
-        deadline
-      }, toWei(amountIn));
-    } else {
-      getReceipt({
-        tokenA: erc20Token.address,
-        addingTokenA: true,
-        pairIndex,
-        offerIndex,
-        amountAIn: toTokenAmount(tokenIn, amountIn),
-        allowAll,
-        restrictedPrice: toWei(restrictedPrice),
-        startDate,
-        expire,
-        deadline
-      });
-    }
-  } else {
-    const paramObj = {
-      tokenA: tokenA.address,
-      tokenB: tokenB.address,
-      addingTokenA: tokenA.address == tokenIn.address,
-      pairIndex,
-      offerIndex,
-      amountIn: toTokenAmount(tokenIn, amountIn),
-      allowAll,
-      restrictedPrice: toWei(restrictedPrice),
-      startDate,
-      expire,
-      deadline
-    };
-    if (trader.length == 0) {
-      receipt = await liquidityContract.addLiquidity(paramObj);
-    } else {
-      const paramObj2 = {
-        tokenA: tokenA.address,
-        tokenB: tokenB.address,
-        addingTokenA: tokenA.address == tokenIn.address ? 1 : 0,
-        pairIndex,
-        offerIndex,
-        amountIn: toTokenAmount(tokenIn, amountIn),
-        allowAll: allowAll ? 1 : 0,
-        restrictedPrice: toWei(restrictedPrice),
-        startDate,
-        expire,
-        deadline
-      };
-      const param = Object.values(paramObj2);
-      const params = { param, trader, allocation };
-      receipt = await liquidityContract.addLiquidityAndTrader(params);
-    }
-  }
-  return receipt;
-};
-var isGroupQueueOracleSupported = async (tokenA, tokenB) => {
-  let oracleAddress = await new import_sdk.Contracts.OSWAP_RestrictedFactory((0, import_store.getWallet)(), getFactoryAddress(import_global.QueueType.GROUP_QUEUE)).oracles({ param1: tokenA, param2: tokenB });
-  return oracleAddress != import_store.nullAddress;
-};
-var creatGroupQueuePair = async (tokenA, tokenB, callback, confirmationCallback) => {
-  let factory = "OSWAP_RestrictedFactory";
-  let token0;
-  let token1;
-  if (new import_eth_wallet.BigNumber(tokenA.toLowerCase()).lt(tokenB.toLowerCase())) {
-    token0 = tokenA;
-    token1 = tokenB;
-  } else {
-    token0 = tokenB;
-    token1 = tokenA;
-  }
-  const factoryContract = new import_sdk.Contracts.OSWAP_RestrictedFactory((0, import_store.getWallet)(), Address[factory]);
-  let receipt = await factoryContract.createPair({ tokenA: token0, tokenB: token1 });
-  return receipt;
 };
 var getGuaranteedBuyBackInfo = async (buybackCampaign) => {
   let info = buybackCampaign;
@@ -4765,33 +4301,6 @@ var getRangeQueueData = async (pair, tokenA, tokenB, amountOut) => {
       }
     }
     data = "0x" + import_eth_wallet.Utils.numberToBytes32(32 * (index.length + 1)) + import_eth_wallet.Utils.numberToBytes32(index.length) + index.map((e) => import_eth_wallet.Utils.numberToBytes32(e)).join("");
-  }
-  return data;
-};
-var getApprovalModelAction = (spenderAddress, options) => {
-  const approvalOptions = __spreadProps(__spreadValues({}, options), {
-    spenderAddress
-  });
-  const approvalModel = new import_global.ERC20ApprovalModel(approvalOptions);
-  let approvalModelAction = approvalModel.getAction();
-  return approvalModelAction;
-};
-var convertGroupQueueWhitelistedAddresses = (inputText) => {
-  function splitByMultipleSeparator(input, separators) {
-    for (let i = 1; i < separators.length; i++) {
-      input = input.replace(separators[i], separators[0]);
-    }
-    return input.split(separators[0]).filter((text) => text != "").map((v) => v.trim());
-  }
-  let data = [];
-  let textArray = splitByMultipleSeparator(inputText, [",", /\s/g, ":", "="]);
-  if (textArray.length % 2 != 0)
-    return [];
-  for (let i = 0; i < textArray.length; i += 2) {
-    data.push({
-      address: textArray[i],
-      allocation: Number(textArray[i + 1])
-    });
   }
   return data;
 };

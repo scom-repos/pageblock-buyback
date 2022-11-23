@@ -6414,7 +6414,7 @@ var BuybackBlock = class extends import_components10.Module {
       this.noCampaignSection.appendChild(/* @__PURE__ */ this.$render("i-panel", {
         class: "no-buyback",
         height: "100%",
-        background: { color: "#192046" }
+        background: { color: "#0c1234" }
       }, /* @__PURE__ */ this.$render("i-vstack", {
         gap: 10,
         verticalAlignment: "center"

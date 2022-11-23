@@ -101,7 +101,7 @@ __export(contracts_exports, {
 });
 
 // src/contracts/OpenSwap.ts
-var import_eth_contract = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/OpenSwap.json.ts
 var OpenSwap_json_default = {
@@ -278,7 +278,7 @@ var OpenSwap = class extends import_eth_contract.Contract {
 };
 
 // src/contracts/amm/OSWAP_ERC20.ts
-var import_eth_contract2 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract2 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/amm/OSWAP_ERC20.json.ts
 var OSWAP_ERC20_json_default = {
@@ -446,7 +446,7 @@ var OSWAP_ERC20 = class extends import_eth_contract2.Contract {
 };
 
 // src/contracts/amm/OSWAP_Factory.ts
-var import_eth_contract3 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract3 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/amm/OSWAP_Factory.json.ts
 var OSWAP_Factory_json_default = {
@@ -689,7 +689,7 @@ var OSWAP_Factory = class extends import_eth_contract3.Contract {
 };
 
 // src/contracts/amm/OSWAP_Pair.ts
-var import_eth_contract4 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract4 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/amm/OSWAP_Pair.json.ts
 var OSWAP_Pair_json_default = {
@@ -1132,7 +1132,7 @@ var OSWAP_Pair = class extends import_eth_contract4.Contract {
 };
 
 // src/contracts/amm/OSWAP_PairCreator.ts
-var import_eth_contract5 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract5 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/amm/OSWAP_PairCreator.json.ts
 var OSWAP_PairCreator_json_default = {
@@ -1167,7 +1167,7 @@ var OSWAP_PairCreator = class extends import_eth_contract5.Contract {
 };
 
 // src/contracts/amm/OSWAP_Router.ts
-var import_eth_contract6 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract6 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/amm/OSWAP_Router.json.ts
 var OSWAP_Router_json_default = {
@@ -1490,7 +1490,7 @@ var OSWAP_Router = class extends import_eth_contract6.Contract {
 };
 
 // src/contracts/amm/OSWAP_VotingExecutor1.ts
-var import_eth_contract7 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract7 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/amm/OSWAP_VotingExecutor1.json.ts
 var OSWAP_VotingExecutor1_json_default = {
@@ -1538,7 +1538,7 @@ var OSWAP_VotingExecutor1 = class extends import_eth_contract7.Contract {
 };
 
 // src/contracts/commons/OSWAP_FactoryBase.ts
-var import_eth_contract8 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract8 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/commons/OSWAP_FactoryBase.json.ts
 var OSWAP_FactoryBase_json_default = {
@@ -1693,7 +1693,7 @@ var OSWAP_FactoryBase = class extends import_eth_contract8.Contract {
 };
 
 // src/contracts/commons/OSWAP_PausableFactory.ts
-var import_eth_contract9 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract9 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/commons/OSWAP_PausableFactory.json.ts
 var OSWAP_PausableFactory_json_default = {
@@ -1796,7 +1796,7 @@ var OSWAP_PausableFactory = class extends import_eth_contract9.Contract {
 };
 
 // src/contracts/commons/OSWAP_PausablePair.ts
-var import_eth_contract10 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract10 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/commons/OSWAP_PausablePair.json.ts
 var OSWAP_PausablePair_json_default = {
@@ -1844,7 +1844,7 @@ var OSWAP_PausablePair = class extends import_eth_contract10.Contract {
 };
 
 // src/contracts/gov/OAXDEX_Administrator.ts
-var import_eth_contract11 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract11 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/gov/OAXDEX_Administrator.json.ts
 var OAXDEX_Administrator_json_default = {
@@ -2224,7 +2224,7 @@ var OAXDEX_Administrator = class extends import_eth_contract11.Contract {
 };
 
 // src/contracts/gov/OAXDEX_Governance.ts
-var import_eth_contract12 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract12 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/gov/OAXDEX_Governance.json.ts
 var OAXDEX_Governance_json_default = {
@@ -2808,7 +2808,7 @@ var OAXDEX_Governance = class extends import_eth_contract12.Contract {
 };
 
 // src/contracts/gov/OAXDEX_VotingContract.ts
-var import_eth_contract13 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract13 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/gov/OAXDEX_VotingContract.json.ts
 var OAXDEX_VotingContract_json_default = {
@@ -3030,7 +3030,7 @@ var OAXDEX_VotingContract = class extends import_eth_contract13.Contract {
 };
 
 // src/contracts/gov/OAXDEX_VotingExecutor.ts
-var import_eth_contract14 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract14 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/gov/OAXDEX_VotingExecutor.json.ts
 var OAXDEX_VotingExecutor_json_default = {
@@ -3078,7 +3078,7 @@ var OAXDEX_VotingExecutor = class extends import_eth_contract14.Contract {
 };
 
 // src/contracts/gov/OAXDEX_VotingRegistry.ts
-var import_eth_contract15 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract15 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/gov/OAXDEX_VotingRegistry.json.ts
 var OAXDEX_VotingRegistry_json_default = {
@@ -3121,7 +3121,7 @@ var OAXDEX_VotingRegistry = class extends import_eth_contract15.Contract {
 };
 
 // src/contracts/libraries/ERC20.ts
-var import_eth_contract16 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract16 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/libraries/ERC20.json.ts
 var ERC20_json_default = {
@@ -3273,7 +3273,7 @@ var ERC20 = class extends import_eth_contract16.Contract {
 };
 
 // src/contracts/oracle/OSWAP_CertiKSecurityOracle.ts
-var import_eth_contract17 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract17 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/oracle/OSWAP_CertiKSecurityOracle.json.ts
 var OSWAP_CertiKSecurityOracle_json_default = {
@@ -3309,7 +3309,7 @@ var OSWAP_CertiKSecurityOracle = class extends import_eth_contract17.Contract {
 };
 
 // src/contracts/oracle/OSWAP_OracleFactory.ts
-var import_eth_contract18 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract18 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/oracle/OSWAP_OracleFactory.json.ts
 var OSWAP_OracleFactory_json_default = {
@@ -3824,7 +3824,7 @@ var OSWAP_OracleFactory = class extends import_eth_contract18.Contract {
 };
 
 // src/contracts/oracle/OSWAP_OracleLiquidityProvider.ts
-var import_eth_contract19 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract19 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/oracle/OSWAP_OracleLiquidityProvider.json.ts
 var OSWAP_OracleLiquidityProvider_json_default = {
@@ -3951,7 +3951,7 @@ var OSWAP_OracleLiquidityProvider = class extends import_eth_contract19.Contract
 };
 
 // src/contracts/oracle/OSWAP_OraclePair.ts
-var import_eth_contract20 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract20 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/oracle/OSWAP_OraclePair.json.ts
 var OSWAP_OraclePair_json_default = {
@@ -4527,7 +4527,7 @@ var OSWAP_OraclePair = class extends import_eth_contract20.Contract {
 };
 
 // src/contracts/oracle/OSWAP_OraclePairCreator.ts
-var import_eth_contract21 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract21 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/oracle/OSWAP_OraclePairCreator.json.ts
 var OSWAP_OraclePairCreator_json_default = {
@@ -4562,7 +4562,7 @@ var OSWAP_OraclePairCreator = class extends import_eth_contract21.Contract {
 };
 
 // src/contracts/oracle/OSWAP_VotingExecutor2.ts
-var import_eth_contract22 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract22 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/oracle/OSWAP_VotingExecutor2.json.ts
 var OSWAP_VotingExecutor2_json_default = {
@@ -4610,7 +4610,7 @@ var OSWAP_VotingExecutor2 = class extends import_eth_contract22.Contract {
 };
 
 // src/contracts/range/OSWAP_RangeFactory.ts
-var import_eth_contract23 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract23 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/range/OSWAP_RangeFactory.json.ts
 var OSWAP_RangeFactory_json_default = {
@@ -4948,7 +4948,7 @@ var OSWAP_RangeFactory = class extends import_eth_contract23.Contract {
 };
 
 // src/contracts/range/OSWAP_RangeLiquidityProvider.ts
-var import_eth_contract24 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract24 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/range/OSWAP_RangeLiquidityProvider.json.ts
 var OSWAP_RangeLiquidityProvider_json_default = {
@@ -5088,7 +5088,7 @@ var OSWAP_RangeLiquidityProvider = class extends import_eth_contract24.Contract 
 };
 
 // src/contracts/range/OSWAP_RangePair.ts
-var import_eth_contract25 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract25 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/range/OSWAP_RangePair.json.ts
 var OSWAP_RangePair_json_default = {
@@ -5578,7 +5578,7 @@ var OSWAP_RangePair = class extends import_eth_contract25.Contract {
 };
 
 // src/contracts/range/OSWAP_RangePairCreator.ts
-var import_eth_contract26 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract26 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/range/OSWAP_RangePairCreator.json.ts
 var OSWAP_RangePairCreator_json_default = {
@@ -5613,7 +5613,7 @@ var OSWAP_RangePairCreator = class extends import_eth_contract26.Contract {
 };
 
 // src/contracts/range/OSWAP_VotingExecutor3.ts
-var import_eth_contract27 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract27 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/range/OSWAP_VotingExecutor3.json.ts
 var OSWAP_VotingExecutor3_json_default = {
@@ -5667,7 +5667,7 @@ var OSWAP_VotingExecutor3 = class extends import_eth_contract27.Contract {
 };
 
 // src/contracts/restricted/OSWAP_ConfigStore.ts
-var import_eth_contract28 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract28 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_ConfigStore.json.ts
 var OSWAP_ConfigStore_json_default = {
@@ -5759,7 +5759,7 @@ var OSWAP_ConfigStore = class extends import_eth_contract28.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedFactory.ts
-var import_eth_contract29 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract29 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedFactory.json.ts
 var OSWAP_RestrictedFactory_json_default = {
@@ -6166,7 +6166,7 @@ var OSWAP_RestrictedFactory = class extends import_eth_contract29.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedLiquidityProvider1.ts
-var import_eth_contract30 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract30 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedLiquidityProvider1.json.ts
 var OSWAP_RestrictedLiquidityProvider1_json_default = {
@@ -6337,7 +6337,7 @@ var OSWAP_RestrictedLiquidityProvider1 = class extends import_eth_contract30.Con
 };
 
 // src/contracts/restricted/OSWAP_RestrictedLiquidityProvider3.ts
-var import_eth_contract31 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract31 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedLiquidityProvider3.json.ts
 var OSWAP_RestrictedLiquidityProvider3_json_default = {
@@ -6478,7 +6478,7 @@ var OSWAP_RestrictedLiquidityProvider3 = class extends import_eth_contract31.Con
 };
 
 // src/contracts/restricted/OSWAP_RestrictedLiquidityProvider4.ts
-var import_eth_contract32 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract32 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedLiquidityProvider4.json.ts
 var OSWAP_RestrictedLiquidityProvider4_json_default = {
@@ -6619,7 +6619,7 @@ var OSWAP_RestrictedLiquidityProvider4 = class extends import_eth_contract32.Con
 };
 
 // src/contracts/restricted/OSWAP_RestrictedPair.ts
-var import_eth_contract33 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract33 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedPair.json.ts
 var OSWAP_RestrictedPair_json_default = {
@@ -7066,7 +7066,7 @@ var OSWAP_RestrictedPair = class extends import_eth_contract33.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedPairOracle.ts
-var import_eth_contract34 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract34 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedPairOracle.json.ts
 var OSWAP_RestrictedPairOracle_json_default = {
@@ -7126,7 +7126,7 @@ var OSWAP_RestrictedPairOracle = class extends import_eth_contract34.Contract {
 };
 
 // src/contracts/restricted/OSWAP_VotingExecutor4.ts
-var import_eth_contract35 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract35 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_VotingExecutor4.json.ts
 var OSWAP_VotingExecutor4_json_default = {
@@ -7180,7 +7180,7 @@ var OSWAP_VotingExecutor4 = class extends import_eth_contract35.Contract {
 };
 
 // src/contracts/router/OSWAP_HybridRouter.ts
-var import_eth_contract36 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract36 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/router/OSWAP_HybridRouter.json.ts
 var OSWAP_HybridRouter_json_default = {
@@ -7355,7 +7355,7 @@ var OSWAP_HybridRouter = class extends import_eth_contract36.Contract {
 };
 
 // src/contracts/router/OSWAP_HybridRouterRegistry.ts
-var import_eth_contract37 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract37 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/router/OSWAP_HybridRouterRegistry.json.ts
 var OSWAP_HybridRouterRegistry_json_default = {
@@ -7705,7 +7705,7 @@ var OSWAP_HybridRouterRegistry = class extends import_eth_contract37.Contract {
 };
 
 // src/contracts/router/OSWAP_OracleRouter.ts
-var import_eth_contract38 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract38 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/router/OSWAP_OracleRouter.json.ts
 var OSWAP_OracleRouter_json_default = {
@@ -7900,7 +7900,7 @@ var OSWAP_OracleRouter = class extends import_eth_contract38.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedPair1.ts
-var import_eth_contract39 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract39 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedPair1.json.ts
 var OSWAP_RestrictedPair1_json_default = {
@@ -8461,7 +8461,7 @@ var OSWAP_RestrictedPair1 = class extends import_eth_contract39.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedPair3.ts
-var import_eth_contract40 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract40 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedPair3.json.ts
 var OSWAP_RestrictedPair3_json_default = {
@@ -9029,7 +9029,7 @@ var OSWAP_RestrictedPair3 = class extends import_eth_contract40.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedPair4.ts
-var import_eth_contract41 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract41 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedPair4.json.ts
 var OSWAP_RestrictedPair4_json_default = {
@@ -9639,7 +9639,7 @@ var OSWAP_RestrictedPair4 = class extends import_eth_contract41.Contract {
 };
 
 // src/contracts/restricted/OSWAP_RestrictedPairCreator.ts
-var import_eth_contract42 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract42 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/restricted/OSWAP_RestrictedPairCreator.json.ts
 var OSWAP_RestrictedPairCreator_json_default = {
@@ -9674,7 +9674,7 @@ var OSWAP_RestrictedPairCreator = class extends import_eth_contract42.Contract {
 };
 
 // src/contracts/router/OSWAP_HybridRouter2.ts
-var import_eth_contract43 = __toModule(require("@ijstech/eth-contract"));
+var import_eth_contract43 = __toModule(require("@ijstech/eth-wallet"));
 
 // src/contracts/router/OSWAP_HybridRouter2.json.ts
 var OSWAP_HybridRouter2_json_default = {
