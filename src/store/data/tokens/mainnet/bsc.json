@@ -1486,5 +1486,11 @@
     "symbol": "OGS",
     "address": "0x416947e6Fc78F158fd9B775fA846B72d768879c2",
     "decimals": 18
+  },
+  {
+    "name": "dummy BVR",
+    "symbol": "dBVR",
+    "address": "0x16C5e51BFa38a6dD109bcc4921a92AEF13B14Ed9",
+    "decimals": 18
   }
 ]

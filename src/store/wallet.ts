@@ -3,7 +3,7 @@ import {
 } from '@ijstech/components';
 import { getWalletOptions, walletList } from './walletList';
 import { Wallet, WalletPlugin } from '@ijstech/eth-wallet';
-import { getCurrentChainId, getDefaultChainId, setCurrentChainId, updateAllTokenBalances } from '@staking/store';
+import { getCurrentChainId, getDefaultChainId, setCurrentChainId, updateAllTokenBalances } from '@buyback/store';
 import { EventId } from '../global';
 
 export function isWalletConnected() {

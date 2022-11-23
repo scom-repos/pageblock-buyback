@@ -15,9 +15,9 @@ import {
   setTokenMap,
   getTokenList,
   fallBackUrl,
-} from '@staking/store';
-import { ITokenObject, formatNumber, EventId } from '@staking/global';
-import Assets from '@staking/assets';
+} from '@buyback/store';
+import { ITokenObject, formatNumber, EventId } from '@buyback/global';
+import Assets from '@buyback/assets';
 import './tokenSelection.css';
 import { ImportToken } from '.';
 

@@ -123,6 +123,20 @@ export const limitDecimals = (value: any, decimals: number) => {
   let decimalsPart = parts[1];
   if (decimalsPart && decimalsPart.length > decimals) {
     parts[1] = decimalsPart.substr(0, decimals);
+    let _part = parts[1].split('');
+    let _index = -1;
+    for (let i = _part.length; i--; i >= 0) {
+      if (Number(_part[i]) > 0) {
+        break;
+      }
+      _index = i;
+    }
+    if (_index === 0) {
+      return parts[0];
+    }
+    if (_index > 0) {
+      parts[1] = parts[1].substr(0, _index);
+    }
   }
   return parts.join(chart);
 }
@@ -319,7 +333,7 @@ export const renderBalanceTooltip = (params: any, tokenMap: TokenMapType, isBold
 }
 
 const replacer = (key: string, value: any) => {
-  if (['minLockTime', 'campaignStart', 'campaignEnd', 'perAddressCap', 'maxTotalLock', 'multiplier', 'initialReward', 'vestingPeriod', 'claimDeadline', 'vestingStartDate', 'rewardAmount', 'value'].includes(key)) {
+  if (['offerIndex', 'idoPrice', 'idoAmount', 'committedAmount'].includes(key)) {
     const val = Number(value);
     return isNaN(val) ? value : val;
   }

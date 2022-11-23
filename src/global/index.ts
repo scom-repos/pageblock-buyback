@@ -12,6 +12,13 @@ export interface INetwork {
     isTestnet?: boolean;
 };
 
+export enum QueueType {
+    PRIORITY_QUEUE,
+    RANGE_QUEUE,
+    GROUP_QUEUE,
+    PEGGED_QUEUE
+}
+
 export const ABIKeys = {
     Factory: 'OAXDEX_Factory',
     Pair: 'OAXDEX_Pair',
@@ -48,7 +55,7 @@ export const ABIKeys = {
     //OracleAdaptor: 'OAXDEX_OracleAdaptor',
     // HybridRouterRegistry: 'OAXDEX_HybridRouterRegistry',
     // HybridRouter: 'OAXDEX_HybridRouter2'
-};  
+};
 
 export const enum EventId {
     ConnectWallet = 'connectWallet',
@@ -77,10 +84,10 @@ export interface ITokenObject {
 
 export type TokenMapType = { [token: string]: ITokenObject; };
 
-export { 
-    ApprovalStatus, 
+export {
+    ApprovalStatus,
     IERC20ApprovalEventOptions,
-    IERC20ApprovalOptions, 
+    IERC20ApprovalOptions,
     IERC20ApprovalAction,
     ERC20ApprovalModel
 } from './approvalModel';

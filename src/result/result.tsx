@@ -1,13 +1,13 @@
 import { customElements, Module, ControlElement, Modal, Panel, Label, Image, Button, Container, VStack } from '@ijstech/components';
-import { getWallet, getNetworkExplorerName, viewOnExplorerByTxHash } from '@staking/store';
-import { parseContractError } from '@staking/global';
+import { getWallet, getNetworkExplorerName, viewOnExplorerByTxHash } from '@buyback/store';
+import { parseContractError } from '@buyback/global';
 import styleClass from './result.css';
-import Assets from '@staking/assets';
+import Assets from '@buyback/assets';
 
 declare global {
 	namespace JSX {
 		interface IntrinsicElements {
-			['staking-result']: ControlElement;
+			['buyback-result']: ControlElement;
 		}
 	}
 };
@@ -20,7 +20,7 @@ export interface IMessage {
   customRedirect?: any,
 }
 
-@customElements('staking-result')
+@customElements('buyback-result')
 export class Result extends Module {
   private confirmModal: Modal;
   private mainContent: Panel;

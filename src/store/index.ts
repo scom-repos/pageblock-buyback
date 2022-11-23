@@ -6,9 +6,9 @@ import {
   getERC20Amount,
   INetwork,
   EventId,
-} from '@staking/global';
+} from '@buyback/global';
 
-import Assets from '@staking/assets';
+import Assets from '@buyback/assets';
 import { Contracts } from '@openswap/sdk';
 import { isWalletConnected } from './wallet';
 import {
@@ -40,15 +40,6 @@ export {
   //core
   CoreContractAddressesByChainId,
   
-  //staking
-  StakingCampaign,
-  Staking,
-  Reward,
-  RewardNeeded,
-  LockTokenType,
-  LockTokenTypeList,
-  USDPeggedTokenAddressMap,
-  
   //cross-chain
   baseRoute,
   crossChainNativeTokenList,
@@ -67,6 +58,9 @@ export {
   BridgeVaultConstant,
 
 } from './data'
+
+export * from './data/buyback';
+export * from './data/group-queue';
 
 export const fallBackUrl = Assets.fullPath('img/tokens/token-placeholder.svg');
 
@@ -160,6 +154,22 @@ export const isExpertMode = (): boolean => {
 
 export function toggleExpertMode() {
   state.isExpertMode = !state.isExpertMode
+}
+
+export const getSlippageTolerance = (): any => {
+  return state.slippageTolerance
+};
+
+export const setSlippageTolerance = (value: any) => {
+  state.slippageTolerance = value
+}
+
+export const getTransactionDeadline = (): any => {
+  return state.transactionDeadline;
+}
+
+export const setTransactionDeadline = (value: any) => {
+  state.transactionDeadline = value
 }
 
 export const getTokenList = (chainId: number) => {

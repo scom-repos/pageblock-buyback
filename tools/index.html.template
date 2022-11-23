@@ -3,12 +3,12 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="./assets/img/favicon.ico">
-  <title>Staking</title>
+  <title>Buyback</title>
   <meta property="og:type" content="website">
   <script src="/dist/launcher.js"></script>
   <style>
     body {
-      --background-default: #0c1234;
+      --background-default: #192046;
       overflow: auto !important;
     }
   </style>
@@ -18,7 +18,7 @@
 <body>
   <script>
     async function init() {
-      let module = await application.newModule('./staking/index.js', {{scconfig}})
+      let module = await application.newModule('./buyback/index.js', {{scconfig}})
       document.body.append(module)
     };
     init();

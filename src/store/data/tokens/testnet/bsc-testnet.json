@@ -123,5 +123,11 @@
     "address": "0x8839903E0D698e5976C39E34bDED66F7B9a1b8c9",
     "symbol": "WINGS",
     "decimals": 18
+  },
+  {
+    "name": "dummy BVR",
+    "address": "0x9DbD7024804a2a6131BE7C8dE7A7773c5c119419",
+    "symbol": "dBVR",
+    "decimals": 18
   }
 ]

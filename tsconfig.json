@@ -9,7 +9,7 @@
         "baseUrl": ".",
         "paths": {
           "@ijstech/components": ["node_modules/@ijstech/components"],
-          "@staking/*": ["src/*"]
+          "@buyback/*": ["src/*"]
         }
     },        
     "include": [

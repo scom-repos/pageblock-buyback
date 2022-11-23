@@ -12,8 +12,8 @@ import {
   Checkbox
 } from '@ijstech/components'; 
 import { Wallet } from '@ijstech/eth-wallet';
-import { EventId, ITokenObject } from '@staking/global';
-import { addUserTokens, setTokenBalances, setTokenMap, viewOnExplorerByAddress } from '@staking/store';
+import { EventId, ITokenObject } from '@buyback/global';
+import { addUserTokens, setTokenBalances, setTokenMap, viewOnExplorerByAddress } from '@buyback/store';
 
 declare global {
 	namespace JSX {
