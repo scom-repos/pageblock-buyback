@@ -39,9 +39,6 @@ interface AvailableRoute {
   reserveB: BigNumber,
 }
 
-
-const routeAPI = 'https://route.openswap.xyz/trading/v1/route';
-const newRouteAPI = 'https://indexer.ijs.dev/trading/v1/route'
 const Factory = 'OAXDEX_Factory';
 const RouterV1 = "OAXDEX_RouterV1";
 const Router = "OAXDEX_Router";

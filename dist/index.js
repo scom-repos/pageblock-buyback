@@ -6130,7 +6130,7 @@
             await this.initApprovalModelAction();
           }
         } catch (e) {
-          console.error(e);
+          this.renderEmpty();
         }
         if (!hideLoading && this.loadingElm) {
           this.loadingElm.visible = false;

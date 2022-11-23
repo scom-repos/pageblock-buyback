@@ -169,8 +169,10 @@ export class BuybackBlock extends Module implements PageBlock {
 			if (firstToken && firstToken.symbol !== ChainNativeTokenByChainId[getChainId()]?.symbol) {
 				await this.initApprovalModelAction();
 			}
-    } catch (e) { console.error(e) }
-    if (!hideLoading && this.loadingElm) {
+		} catch {
+			this.renderEmpty();
+		}
+		if (!hideLoading && this.loadingElm) {
 			this.loadingElm.visible = false;
 		}
 	}

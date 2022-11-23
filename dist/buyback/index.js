@@ -6131,7 +6131,7 @@ var BuybackBlock = class extends import_components10.Module {
           await this.initApprovalModelAction();
         }
       } catch (e) {
-        console.error(e);
+        this.renderEmpty();
       }
       if (!hideLoading && this.loadingElm) {
         this.loadingElm.visible = false;
