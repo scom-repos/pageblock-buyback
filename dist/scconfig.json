@@ -11,6 +11,7 @@
     }
   ],
   "dependencies": {
+    "@ijstech/eth-contract": "{root}/lib/eth-contract/index.js",
     "@ijstech/eth-wallet-web3modal": "{LIB}/lib/eth-wallet-web3modal/index.js",
     "@openswap/sdk": "{root}/sdks/sdk/index.js",
     "@openswap/chainlink-sdk": "{root}/sdks/chainlink-sdk/index.js",

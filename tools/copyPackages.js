@@ -18,6 +18,7 @@ async function copyDir(src, dest) {
 async function run(){
     await copyDir('./src/assets/fonts', './dist/assets/fonts');
     await copyDir('./src/assets/img', './dist/assets/img');
+    await copyDir('./node_modules/@ijstech/eth-contract/dist', './dist/lib/eth-contract')
     await fs.copyFile('./src/scconfig.json', './dist/scconfig.json');
 }
 run();
