@@ -291,7 +291,7 @@ export class BuybackBlock extends Module implements PageBlock {
 		const secondToken = this.getTokenObject('fromTokenAddress');
     limitInputNumber(this.firstInput, firstToken?.decimals || 18);
     if (!this.buybackInfo) return;
-		const info = this.buybackInfo.queueInfo || {};
+		const info = this.buybackInfo.queueInfo || {} as any;
     const { offerPrice, tradeFee } = info;
 		const firstSymbol = firstToken?.symbol || '';
 		const inputVal = new BigNumber(this.firstInput.value).dividedBy(offerPrice).times(tradeFee);
@@ -310,7 +310,7 @@ export class BuybackBlock extends Module implements PageBlock {
 		const secondToken = this.getTokenObject('fromTokenAddress');
     limitInputNumber(this.secondInput, secondToken?.decimals || 18);
     if (!this.buybackInfo) return;
-		const info = this.buybackInfo.queueInfo || {};
+		const info = this.buybackInfo.queueInfo || {} as any;
     const { offerPrice, tradeFee } = info;
 		const firstSymbol = firstToken?.symbol || '';
     const inputVal = new BigNumber(this.secondInput.value).multipliedBy(offerPrice).dividedBy(tradeFee);
@@ -343,7 +343,7 @@ export class BuybackBlock extends Module implements PageBlock {
 
 	private onSwap = () => {
 		if (this.buybackInfo && this.isApproveButtonShown) {
-			const info = this.buybackInfo.queueInfo || {};
+			const info = this.buybackInfo.queueInfo || {} as any;
       this.approvalModelAction.doApproveAction(this.getTokenObject('toTokenAddress') as ITokenObject, info.tokenInAvailable);
       return;
     } else {
@@ -545,7 +545,7 @@ export class BuybackBlock extends Module implements PageBlock {
 		if (this.buybackInfo) {
 			this.buybackElm.clearInnerHTML();
 			const { tokenOut, tokenIn, projectName, queueInfo } = this.buybackInfo;
-			const info = queueInfo || {};
+			const info = queueInfo || {} as any;
 			const firstSymbol = tokenSymbol(this.getValueByKey('toTokenAddress'));
 
 			const vStackTimer = await VStack.create({ gap: 4, verticalAlignment: 'center' });

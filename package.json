@@ -4,15 +4,19 @@
     "version": "0.1.0",
     "description": "",
     "scripts": {
-        "build": "rm -rf dist && node esbuild.js && node tools/copyPackages.js",
-        "serve": "node tools/serve"
+        "build": "rm -rf dist && npx @ijstech/compiler",
+        "serve": "npx @ijstech/cli serve 8080",
+        "test": "npm run build && npm run serve"
     },
     "keywords": [],
     "license": "AGPL-3.0",
     "devDependencies": {
+        "@ijstech/cli": "^0.1.26",
+        "@ijstech/compiler": "^0.1.17",
         "@ijstech/components": "0.1.27",
-        "@ijstech/eth-wallet": "0.1.23",
-        "@openswap/sdk": "https://github.com/openswapdex/openswap-sdk",
+        "@ijstech/eth-contract": "^0.1.4",
+        "@ijstech/eth-wallet": "0.1.27",
+        "@openswap/sdk": "0.1.11",
         "@openswap/chainlink-sdk": "0.1.0",
         "@openswap/oracle-adaptor-sdk": "https://github.com/openswapdex/oracle-adaptor-sdk",
         "@types/node": "14.17",

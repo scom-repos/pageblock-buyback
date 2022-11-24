@@ -1,6 +1,19 @@
 import { Wallet, Erc20, BigNumber, ISendTxEventsOptions } from "@ijstech/eth-wallet"; 
 import { Contracts } from "@openswap/sdk";
-import { ITokenObject } from "..";
+
+interface ITokenObject {
+  address?: string;
+  name: string;
+  decimals: number;
+  symbol: string;
+  status?: boolean | null;
+  logoURI?: string;
+  isCommon?: boolean | null;
+  balance?: string | number;
+  isNative?: boolean | null;
+  isWETH?: boolean | null;
+  isNew?: boolean | null;
+};
 
 export const isTransactionConfirmed = async (txHash: string) => {
   const tx = await Wallet.getInstance().web3.eth.getTransaction(txHash);
@@ -29,7 +42,7 @@ export async function getERC20Amount(wallet:Wallet, token:string, decimals:numbe
 }
 
 export const approveERC20Max = async (token: ITokenObject, spenderAddress: string, callback?: any, confirmationCallback?: any) => {
-  let wallet = Wallet.getInstance();
+  let wallet = Wallet.getInstance() as any;
   let amount = new BigNumber(2).pow(256).minus(1);
   let erc20 = new Contracts.ERC20(wallet, token.address);
   registerSendTxEvents({
@@ -45,7 +58,7 @@ export const approveERC20Max = async (token: ITokenObject, spenderAddress: strin
 
 export const getERC20Allowance = async (token: ITokenObject, spenderAddress: string) => {
   if (!token?.address) return null;
-  let wallet = Wallet.getInstance();
+  let wallet = Wallet.getInstance() as any;
   let erc20 = new Contracts.ERC20(wallet, token.address);
   let allowance = await erc20.allowance({
     owner: wallet.account.address,

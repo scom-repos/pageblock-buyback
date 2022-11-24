@@ -36,3 +36,6 @@ export {
   InfuraId,
   Networks,
 } from './networks';
+
+export * from './wallet';
+export * from './walletList';

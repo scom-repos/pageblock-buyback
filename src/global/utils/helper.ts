@@ -1,6 +1,5 @@
 import { BigNumber } from "@ijstech/eth-wallet";
-import moment from 'moment';
-import { TokenMapType } from "..";
+import { moment } from '@ijstech/components';
 
 export enum SITE_ENV {
   DEV = 'dev',
@@ -199,107 +198,6 @@ export const getParamsFromUrl = () => {
   return urlParams;
 }
 
-export const formatNumberValue = (data: any, tokenMap: TokenMapType) => {
-  const { title, value, symbol, icon, prefix, isWrapped } = data;
-  try {
-    let limitDecimals = 18;
-    if (symbol) {
-      let symb = symbol;
-      if (symb.includes('/')) {
-        symb = symb.split('/')[0];
-      }
-      if (symbol === 'USD') {
-        limitDecimals = 2;
-      } else {
-        const tokenObj = Object.values(tokenMap).find((token: any) => token.symbol === symb) as any;
-        if (tokenObj) {
-          limitDecimals = tokenObj.decimals || 18;
-        }
-      }
-    }
-    const val = parseFloat(value);
-    const minValue = 0.0001;
-    let result;
-    let tooltip = `${value}`;
-    if (val === 0) {
-      result = `0`;
-    } else if (val < minValue) {
-      if (prefix === '$') {
-        result = `< ${prefix}${minValue}`;
-      } else if (prefix) {
-        result = `${prefix.replace('=', '')} < ${minValue}`;
-      } else {
-        result = `< ${minValue}`;
-      }
-      tooltip = val.toLocaleString('en-US', { maximumFractionDigits: limitDecimals });
-    } else {
-      const stringValue = value.toString();
-      const decimalsIndex = stringValue.indexOf('.');
-      const length = decimalsIndex < 0 ? stringValue.length : stringValue.length - 1;
-      let valueFormatted = val.toLocaleString('en-US', { maximumFractionDigits: limitDecimals });
-      const arr = valueFormatted.split('.');
-      valueFormatted = arr[0];
-      if (arr[1]) {
-        valueFormatted = `${arr[0]}.${arr[1].substr(0, 4)}`;
-      }
-      if (length <= 7) {
-        result = valueFormatted;
-      } else if (decimalsIndex > 7) {
-        result = `${valueFormatted.substr(0, 9)}...`;
-      } else if (decimalsIndex > -1) {
-        result = valueFormatted;
-      } else {
-        const finalVal = valueFormatted.substr(0, 13);
-        result = `${finalVal}${length > 10 ? '...' : ''}`;
-      }
-      if (result.length > 20 && !result.includes('...')) {
-        result = `${result.substr(0, 13)}...`;
-      }
-
-      // Format value for the tooltip
-      const parts = stringValue.split('.');
-      const intVal = parseInt(parts[0]).toLocaleString('en-US');
-      tooltip = `${intVal}`;
-      if (parts[1]) {
-        let decVal = parts[1];
-        if (parts[1].length > limitDecimals) {
-          decVal = parseFloat(`0.${parts[1]}`).toLocaleString('en-US', { maximumFractionDigits: limitDecimals });
-          if (decVal == 1) {
-            decVal = parts[1].substr(0, limitDecimals);
-          } else {
-            decVal = decVal.substr(2);
-          }
-        }
-        tooltip += `.${decVal}`;
-      }
-    }
-    if (icon) {
-      result += ` <img width="20" src="${icon}" style="padding-bottom: 0.15rem" />`;
-    }
-    if (symbol) {
-      result += ` ${symbol}`;
-      tooltip += ` ${symbol}`;
-    }
-    if (prefix) {
-      result = `${val < minValue ? '' : prefix}${result}`;
-      tooltip = `${prefix}${tooltip}`;
-    }
-    if (title) {
-      result = `${title}: ${result}`;
-    }
-    if (isWrapped) {
-      result = `(${result})`;
-    }
-    if (symbol === 'USD') {
-      return result;
-    } else {
-      return { result, tooltip }
-    }
-  } catch {
-    return '-';
-  }
-}
-
 export const uniqWith = (array: any[], compareFn: (cur: any, oth: any) => boolean) => {
   const unique: any = [];
   for (const cur of array) {
@@ -318,18 +216,6 @@ export const getWeekDays = () => {
     days.push(day.setDate(day.getDate() + 1));
   }
   return days;
-}
-
-export const renderBalanceTooltip = (params: any, tokenMap: TokenMapType, isBold?: boolean) => {
-  const data = formatNumberValue(params, tokenMap);
-  if (typeof data === "object") {
-    const { result, tooltip } = data;
-    if (isBold) {
-      return `<i-label class="bold" tooltip='${JSON.stringify({ content: tooltip })}'>${result}</i-label>`
-    }
-    return `<i-label tooltip='${JSON.stringify({ content: tooltip })}'>${result}</i-label>`;
-  }
-  return data;
 }
 
 const replacer = (key: string, value: any) => {
