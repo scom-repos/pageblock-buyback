@@ -18,7 +18,7 @@ import {
   GuaranteedBuyBackCampaign,
 } from '@buyback/store';
 import { Contracts } from "@openswap/sdk";
-import { Contracts as SolidityContracts } from "@validapp/chainlink-sdk"
+import { Contracts as SolidityContracts } from "@openswap/chainlink-sdk"
 import { Contracts as AdaptorContracts } from "@openswap/oracle-adaptor-sdk"
 import moment from 'moment';
 

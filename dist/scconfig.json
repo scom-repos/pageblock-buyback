@@ -13,7 +13,7 @@
   "dependencies": {
     "@ijstech/eth-wallet-web3modal": "{LIB}/lib/eth-wallet-web3modal/index.js",
     "@openswap/sdk": "{root}/sdks/sdk/index.js",
-    "@validapp/chainlink-sdk": "{root}/sdks/chainlink-sdk/index.js",
+    "@openswap/chainlink-sdk": "{root}/sdks/chainlink-sdk/index.js",
     "@openswap/oracle-adaptor-sdk": "{root}/sdks/oracle-adaptor-sdk/index.js",
     "@buyback/assets": "{root}/assets/index.js",
     "@buyback/global": "{root}/global/index.js",

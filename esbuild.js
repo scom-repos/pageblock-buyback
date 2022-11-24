@@ -9,7 +9,7 @@ const SDKList = [
   },
   {
     name: 'chainlink-sdk',
-    path: './node_modules/@validapp/chainlink-sdk/dist/index.js'
+    path: './node_modules/@openswap/chainlink-sdk/dist/index.js'
   },
   {
     name: 'oracle-adaptor-sdk',
@@ -62,7 +62,7 @@ const GlobalModuleESBuildConfig = {
     '@validapp/bakery-swap-sdk',
     '@validapp/trader-joe-sdk',
     '@scom/impossible-swap-sdk',
-    '@validapp/chainlink-sdk',
+    '@openswap/chainlink-sdk',
     '@validapp/time-is-money-sdk',
     '@openswap/oracle-adaptor-sdk',
     '@buyback/queue-utils',
@@ -86,7 +86,7 @@ const LocalModuleESBuildConfig = {
     '@validapp/bakery-swap-sdk',
     '@validapp/trader-joe-sdk',
     '@scom/impossible-swap-sdk',
-    '@validapp/chainlink-sdk',
+    '@openswap/chainlink-sdk',
     '@validapp/time-is-money-sdk',
     '@openswap/oracle-adaptor-sdk',
     '@buyback/queue-utils',
