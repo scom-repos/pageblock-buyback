@@ -15,6 +15,8 @@ services:
   serve:
     user: node
     image: node:18
+    ports:
+      - "8099:8080"
     volumes:
       - .:/app
     command: bash -c "cd /app && npm run serve"   
@@ -28,7 +30,7 @@ services:
     #docker-compose run --rm dev bash
     user: node
     image: node:18
-    working_dir: /app
+    working_dir: /data
     volumes:
       - .:/app
     tty: true
