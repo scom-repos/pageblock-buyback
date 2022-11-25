@@ -1,4 +1,4 @@
-[
+export const Tokens_AminoXTestnet = [
     {
         "name": "OpenSwap",
         "address": "0xA0AF68AB35fa4618b57C1A7CFc07A8caa0cBf07E",

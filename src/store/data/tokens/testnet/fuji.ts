@@ -1,4 +1,4 @@
-[
+export const Tokens_Fuji = [
   {
     "name": "Wrapped AVAX",
     "address": "0xd00ae08403B9bbb9124bB305C09058E32C39A48c",

@@ -1,4 +1,4 @@
-[
+export const Tokens_Fantom = [
   { 
     "address": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83", 
     "name": "Wrapped Fantom", 

@@ -3,7 +3,7 @@
   "env": "mainnet",
   "version": "0.1.0",
   "moduleDir": "src",
-  "main": "@buyback/buyback",
+  "main": "@buyback/main",
   "modules": {
     "@buyback/assets": {
       "path": "assets"
@@ -20,8 +20,11 @@
     "@buyback/swap-utils": {
       "path": "swap-utils"
     },
-    "@buyback/buyback": {
-      "path": "buyback"
+    "@buyback/result": {
+      "path": "result"
+    },
+    "@buyback/main": {
+      "path": "main"
     }
   },
   "dependencies": {

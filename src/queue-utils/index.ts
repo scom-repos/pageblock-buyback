@@ -20,9 +20,7 @@ import {
 import { Contracts } from "@openswap/sdk";
 import { Contracts as SolidityContracts } from "@openswap/chainlink-sdk"
 import { Contracts as AdaptorContracts } from "@openswap/oracle-adaptor-sdk"
-import moment from 'moment';
-
-const isFactory2Applied = true; // hard coded
+import { moment } from '@ijstech/components';
 
 const ConfigStore = ABIKeys.ConfigStore;
 
@@ -306,7 +304,7 @@ const getGroupQueueTraderDataObj = async (pairAddress: string, tokenIn: any, tok
     }
   }
 
-  let ratioArr = [getWallet().web3.utils.toWei('1')];
+  let ratioArr = [toWeiInv('1')];
   let queueItem;
   if (offerIndex) {
     queueItem = queueArr.find(o => o.index.eq(offerIndex));
@@ -371,7 +369,7 @@ const getRestrictedPairCustomParams = async () => {
   let feePerTraderRaw = await configStoreContract.customParam(Utils.stringToBytes32(FEE_PER_TRADER).toString());
   let feePerTrader = Utils.fromDecimals(feePerTraderRaw).toString();
   let maxDur = await configStoreContract.customParam(Utils.stringToBytes32(MAX_DUR).toString());
-  maxDur = BigInt(maxDur).toString();
+  maxDur = new BigNumber(maxDur).toString();
   return {
     feePerOrder,
     feePerTrader,

@@ -1,4 +1,4 @@
-[
+export const Tokens_BSC = [
   {
     "name": "OpenSwap",
     "symbol": "OSWAP",

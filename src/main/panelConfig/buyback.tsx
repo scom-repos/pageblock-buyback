@@ -1,7 +1,7 @@
 import { Container, Panel, customElements, ControlElement, Module, Input, application, Control } from '@ijstech/components';
 import { EventId, isValidNumber, ITokenObject, limitInputNumber } from '@buyback/global';
 import { getChainId, getTokenMap, GuaranteedBuyBackCampaign } from '@buyback/store';
-import { TokenSelection } from '@buyback/token-selection';
+import { TokenSelection } from './token-selection/index';
 
 declare global {
 	namespace JSX {

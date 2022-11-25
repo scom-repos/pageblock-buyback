@@ -1,4 +1,4 @@
-[
+export const Tokens_Cronos_Testnet = [
     { 
       "address": "0x6a3173618859C7cd40fAF6921b5E9eB6A76f1fD4", 
       "name": "Wrapped CRO", 

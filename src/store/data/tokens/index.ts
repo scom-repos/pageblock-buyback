@@ -1,20 +1,6 @@
-import { ITokenObject } from "../../../global";
-
-const Tokens_BSC: ITokenObject[] = require('./mainnet/bsc.json');
-const Tokens_Ethereuem: ITokenObject[] = require('./mainnet/ethereum.json');
-const Tokens_Polygon: ITokenObject[] = require('./mainnet/polygon.json');
-const Tokens_Avalanche: ITokenObject[] = require('./mainnet/avalanche.json');
-const Tokens_Fantom: ITokenObject[] = require('./mainnet/fantom.json');
-const Tokens_Cronos: ITokenObject[] = require('./mainnet/cronos.json'); //not added
-
-const Tokens_Kovan: ITokenObject[] = require('./testnet/kovan.json');
-const Tokens_BSC_Testnet: ITokenObject[] = require('./testnet/bsc-testnet.json');
-const Tokens_Fuji: ITokenObject[] = require('./testnet/fuji.json');
-const Tokens_Mumbai: ITokenObject[] = require('./testnet/mumbai.json');
-const Tokens_Fantom_Testnet: ITokenObject[] = require('./testnet/fantom-testnet.json');
-const Tokens_Amino: ITokenObject[] = require('./testnet/amino.json');
-const Tokens_AminoXTestnet: ITokenObject[] = require('./testnet/aminoX-testnet.json');
-const Tokens_Cronos_Testnet: ITokenObject[] = require('./testnet/cronos-testnet.json');
+import { ITokenObject } from "@buyback/global";
+import { Tokens_Avalanche, Tokens_BSC, Tokens_Cronos, Tokens_Ethereuem, Tokens_Fantom, Tokens_Polygon } from "./mainnet/index";
+import { Tokens_Amino, Tokens_AminoXTestnet, Tokens_BSC_Testnet, Tokens_Cronos_Testnet, Tokens_Fantom_Testnet, Tokens_Fuji, Tokens_Kovan, Tokens_Mumbai } from "./testnet/index";
 
 const DefaultERC20Tokens: { [chainId: number]: ITokenObject[] } = {
   1: Tokens_Ethereuem,

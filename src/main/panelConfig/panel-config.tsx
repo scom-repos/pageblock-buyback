@@ -1,9 +1,9 @@
 import { Button, Container, HStack, Panel, customElements, ControlElement, Module, IEventBus, application, Label } from '@ijstech/components';
 import { downloadJsonFile, EventId, registerSendTxEvents } from '@buyback/global';
-import { Result } from '../../result';
-import './panel-config.css';
 import { getChainId, getNetworkInfo, GuaranteedBuyBackCampaign, isWalletConnected } from '@buyback/store';
+import { Result } from '@buyback/result';
 import { CampaignConfig } from './buyback';
+import './panel-config.css';
 declare global {
   namespace JSX {
     interface IntrinsicElements {

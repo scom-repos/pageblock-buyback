@@ -1,6 +1,5 @@
 import { Styles } from '@ijstech/components';
 import Assets from '@buyback/assets';
-import { maxWidth, maxHeight } from '../config';
 
 const colorVar = {
   primaryButton: 'transparent linear-gradient(90deg, #AC1D78 0%, #E04862 100%) 0% 0% no-repeat padding-box',
@@ -197,8 +196,8 @@ Styles.cssRule('.pageblock-buyback', {
     '.wrapper': {
       width: '100%',
       height: '100%',
-      maxWidth,
-      maxHeight,
+      maxWidth: '690px',
+      maxHeight: '321px',
       $nest: {
         '.bg-color': {
           display: 'flex',

@@ -1,4 +1,4 @@
-[
+export const Tokens_Fantom_Testnet = [
   {
     "address": "0xf1277d1Ed8AD466beddF92ef448A132661956621",
     "decimals": 18,

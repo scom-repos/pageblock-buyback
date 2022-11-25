@@ -1,3 +1,193 @@
+import Assets from "@buyback/assets";
+
+export enum Market {
+  OPENSWAP,
+  UNISWAP,
+  SUSHISWAP,
+  PANCAKESWAPV1,
+  PANCAKESWAP,
+  BAKERYSWAP,
+  BURGERSWAP,
+  IFSWAPV1,
+  OPENSWAPV1,
+  HYBRID,
+  MIXED_QUEUE,
+  GROUP_QUEUE,
+  QUICKSWAP,
+  BISWAP,
+  PANGOLIN,
+  TRADERJOE,
+  SPIRITSWAP,
+  SPOOKYSWAP,
+  PEGGED_QUEUE,
+  HAKUSWAP,
+  JETSWAP,
+  IFSWAPV3
+}
+
+export interface ProviderConfig {
+  caption: string;
+  image: string;
+  marketCode: Market;
+  key: string;
+  dexId?: number;
+  supportedChains?: number[];
+}
+
+export const ProviderConfigMap: { [key: string]: ProviderConfig } = {
+  OpenSwap: {
+    caption: 'OpenSwap',
+    image: Assets.fullPath('img/swap/openswap.png'),
+    marketCode: Market.OPENSWAP,
+    key: 'OpenSwap',
+    dexId: 1,
+    supportedChains: [42, 56, 97, 4002, 43113, 43114, 80001, 13370, 338]
+  },
+  Uniswap: {
+    caption: 'Uniswap',
+    image: Assets.fullPath('img/swap/uniswap-logo.svg'),
+    marketCode: Market.UNISWAP,
+    key: 'Uniswap',
+    dexId: 10,
+    supportedChains: [1, 42]
+  },
+  SushiSwap: {
+    caption: 'SushiSwap',
+    image: Assets.fullPath('img/swap/sushiswap-logo.svg'),
+    marketCode: Market.SUSHISWAP,
+    key: 'SushiSwap',
+    dexId: 8,
+    supportedChains: [1, 42, 137, 250, 43113, 43114]
+  },
+  PancakeSwap: {
+    caption: 'PancakeSwap',
+    image: Assets.fullPath('img/swap/pancakeswap.svg'),
+    marketCode: Market.PANCAKESWAP,
+    key: 'PancakeSwap',
+    dexId: 2,
+    supportedChains: [56, 97]
+  },
+  PancakeSwapV1: {
+    caption: 'PancakeSwapV1',
+    image: Assets.fullPath('img/pancakeswap.svg'),
+    marketCode: Market.PANCAKESWAPV1,
+    key: 'PancakeSwapV1'
+  },
+  BakerySwap: {
+    caption: 'BakerySwap',
+    image: Assets.fullPath('img/swap/bakeryswap.svg'),
+    marketCode: Market.BAKERYSWAP,
+    key: 'BakerySwap',
+    dexId: 3,
+    supportedChains: [56, 97]
+  },
+  BurgerSwap: {
+    caption: 'BurgerSwap',
+    image: Assets.fullPath('img/swap/burgerswap.png'),
+    marketCode: Market.BURGERSWAP,
+    key: 'BurgerSwap',
+    dexId: 4
+  },
+  Oracle: {
+    caption: 'Oracle',
+    image: Assets.fullPath('img/swap/openswap.png'),
+    marketCode: Market.MIXED_QUEUE,
+    key: 'Oracle',
+    dexId: 5,
+    supportedChains: [56, 97, 43113, 43114]
+  },
+  PeggedOracle: {
+    caption: 'Pegged Queue',
+    image: Assets.fullPath('img/swap/openswap.png'),
+    marketCode: Market.PEGGED_QUEUE,
+    key: 'PeggedOracle'
+  },
+  GroupQueue: {
+    caption: 'Group Queue',
+    image: Assets.fullPath('img/swap/openswap.png'),
+    marketCode: Market.GROUP_QUEUE,
+    key: 'GroupQueue'
+  },
+  IFSwapV1: {
+    caption: 'IFSwapV1',
+    image: Assets.fullPath('img/swap/IFSwapV1.png'),
+    marketCode: Market.IFSWAPV1,
+    key: 'IFSwapV1',
+    dexId: 7,
+    supportedChains: [56]
+  },
+  IFSwapV3: {
+    caption: 'IFSwapV3',
+    image: Assets.fullPath('img/swap/IFSwapV1.png'),
+    marketCode: Market.IFSWAPV3,
+    key: 'IFSwapV3',
+    dexId: 18,
+    supportedChains: [56]
+  },
+  OpenSwapV1: {
+    caption: 'OpenSwapV1',
+    image: Assets.fullPath('img/swap/openswap.png'),
+    marketCode: Market.OPENSWAPV1,
+    key: 'OpenSwapV1'
+  },
+  Hybrid: {
+    caption: 'Smart Router',
+    image: Assets.fullPath('img/swap/openswap.png'),
+    marketCode: Market.HYBRID,
+    key: 'Hybrid',
+    dexId: 0,
+    supportedChains: [42, 56, 97, 43113, 43114]
+  },
+  QuickSwap: {
+    caption: 'QuickSwap',
+    image: Assets.fullPath('img/swap/quickswap-logo.png'),
+    marketCode: Market.QUICKSWAP,
+    key: 'QuickSwap',
+    dexId: 9,
+    supportedChains: [137]
+  },
+  BiSwap: {
+    caption: 'BiSwap',
+    image: Assets.fullPath('img/swap/biswapsvg.svg'),
+    marketCode: Market.BISWAP,
+    key: 'BiSwap',
+    dexId: 11,
+    supportedChains: [56]
+  },
+  Pangolin: {
+    caption: 'Pangolin',
+    image: Assets.fullPath('img/swap/pangolin.svg'),
+    marketCode: Market.PANGOLIN,
+    key: 'Pangolin',
+    dexId: 12,
+    supportedChains: [43113, 43114]
+  },
+  TraderJoe: {
+    caption: 'TraderJoe',
+    image: Assets.fullPath('img/swap/traderjoe.svg'),
+    marketCode: Market.TRADERJOE,
+    key: 'TraderJoe',
+    dexId: 13,
+    supportedChains: [43114]
+  },
+  SpiritSwap: {
+    caption: 'SpiritSwap',
+    image: Assets.fullPath('img/swap/spiritswap-logo.svg'),
+    marketCode: Market.SPIRITSWAP,
+    key: 'SpiritSwap',
+    dexId: 15,
+    supportedChains: [250]
+  },
+  SpookySwap: {
+    caption: 'SpookySwap',
+    image: Assets.fullPath('img/swap/spookyswap-logo.svg'),
+    marketCode: Market.SPOOKYSWAP,
+    key: 'SpookySwap',
+    dexId: 14,
+    supportedChains: [250]
+  },
+};
+
 export interface GuaranteedBuyBackCampaign {
   projectName: string;
   providerAddress?: string;
@@ -120,8 +310,8 @@ export const GuaranteedBuyBackCampaignInfo: {
       tokenOut: "0x9DbD7024804a2a6131BE7C8dE7A7773c5c119419",//"dBVR",
       idoPrice: 0.15, // in tokenOut
       idoAmount: 1852881,
-      idoDate: 
-      1650686400000,
+      idoDate:
+        1650686400000,
       idoUrl: "https://app.impossible.finance/launchpad/project/BVR",
       committedAmount: 1852881,
       offeringType: "IDO",
@@ -130,81 +320,3 @@ export const GuaranteedBuyBackCampaignInfo: {
   ]
 };
 
-export interface MilestoneInfo {
-  campaignName: string;
-  projectName: string;
-  providerAddress: string;
-  description: string;
-  tokenForSale: string;
-  purchase: MilestoneOffer;
-  redeem: MilestoneOffer;
-  buyback: MilestoneOffer;
-}
-
-interface MilestoneOffer {
-  pairAddress: string;
-  offerIndex: number;
-  tokenIn: string;
-  tokenOut: string;
-}
-
-export const MilestoneInfoByChainId: { [chainId: number]: MilestoneInfo[] } = {
-  // Binance Mainnet
-  56: [
-    {
-      campaignName: "IDIA",
-      projectName: "IDIA Booster Queue Offering",
-      providerAddress: "0x18DD9e6F8EA9cCaC88635209A6cf68648895a70b",
-      description:
-        "Impossible Finanace luanches Booster Queue on OpenSwap to offer a private sale of $25,000 worth mIDIA to investor. The bqIDIA1 token is redeemable to IDIA tokens 1 year after the sale and it is backed up by a 95% Buyback of the offer price.",
-      tokenForSale: "28488",
-      purchase: {
-        pairAddress: "0x17e7Ad6EAE34E13F4015F9BDfaeE44274c3F1CD4",
-        offerIndex: 1,
-        tokenIn: "0x46c5BC0656301c3DFb8EF8fc44CfBF89ef121348",
-        tokenOut: "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-      },
-      redeem: {
-        pairAddress: "0xDAc37424B823A5D13995A7296984e4B3f96acC3C",
-        offerIndex: 1,
-        tokenIn: "0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89",
-        tokenOut: "0x46c5BC0656301c3DFb8EF8fc44CfBF89ef121348",
-      },
-      buyback: {
-        pairAddress: "0x17e7Ad6EAE34E13F4015F9BDfaeE44274c3F1CD4",
-        offerIndex: 2,
-        tokenIn: "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-        tokenOut: "0x46c5BC0656301c3DFb8EF8fc44CfBF89ef121348",
-      },
-    },
-  ],
-  // Binance Test Chain
-  97: [
-    {
-      campaignName: "CrossChain Bridge",
-      projectName: "OpenSwap Demo 1",
-      providerAddress: "0x069E76f6FF91000BEf420D78590B6C1309349ec9",
-      description:
-        "OpenSwap key Booster - CrossChain Bridge is going to luanch in late March. Buy booster tokens at a discounted price in advance to earn more!",
-      tokenForSale: "20000",
-      purchase: {
-        pairAddress: "0xE8b5ca89d9a43901087A30319a14De83B5b3Ccd8",
-        offerIndex: 4,
-        tokenIn: "0xc2c76387eb1cd15f2f55d2463b5aad6fca062eb1",
-        tokenOut: "0xde9334c157968320f26e449331d6544b89bbd00f",
-      },
-      redeem: {
-        pairAddress: "0x9cF8a74fC451c02ef2d0Faa2f466Ac6b3629687f",
-        offerIndex: 5,
-        tokenIn: "0x45eee762aaea4e5ce317471bda8782724972ee19",
-        tokenOut: "0xc2c76387eb1cd15f2f55d2463b5aad6fca062eb1",
-      },
-      buyback: {
-        pairAddress: "0xE8b5ca89d9a43901087A30319a14De83B5b3Ccd8",
-        offerIndex: 2,
-        tokenIn: "0xde9334c157968320f26e449331d6544b89bbd00f",
-        tokenOut: "0xc2c76387eb1cd15f2f55d2463b5aad6fca062eb1",
-      },
-    },
-  ],
-};

@@ -1,4 +1,4 @@
-[
+export const Tokens_Amino = [
     {
         "name": "USDT",
         "address": "0x28A6a9079fA8e041179cD13F4652af2B315b6fd8",

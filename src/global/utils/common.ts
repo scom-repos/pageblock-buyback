@@ -16,7 +16,7 @@ interface ITokenObject {
 };
 
 export const isTransactionConfirmed = async (txHash: string) => {
-  const tx = await Wallet.getInstance().web3.eth.getTransaction(txHash);
+  const tx = await Wallet.getInstance().getTransactionReceipt(txHash);
   return tx && !!tx.blockNumber;
 }
 
@@ -65,10 +65,4 @@ export const getERC20Allowance = async (token: ITokenObject, spenderAddress: str
     spender: spenderAddress
   });
   return allowance;
-}
-
-export const isAddressValid = async(address: string) => {
-  let wallet = Wallet.getInstance();
-  const isValid = wallet.web3.utils.isAddress(address);
-  return isValid;
 }

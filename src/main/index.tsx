@@ -1,15 +1,16 @@
-import { Module, Panel, Button, Label, VStack, Container, customElements, ControlElement, IEventBus, application, customModule, Modal, Input } from '@ijstech/components';
+import { Module, Panel, Button, Label, VStack, Container, customElements, ControlElement, IEventBus, application, customModule, Modal, Input, moment } from '@ijstech/components';
 import { formatNumber, formatDate, PageBlock, EventId, limitInputNumber, limitDecimals, IERC20ApprovalAction, QueueType, ITokenObject } from '@buyback/global';
 import { InfuraId, Networks, getChainId, getTokenMap, isWalletConnected, setTokenMap, getDefaultChainId, hasWallet, connectWallet, setDataFromSCConfig, setCurrentChainId, tokenSymbol, GuaranteedBuyBackCampaign, getTokenIcon, fallBackUrl, getTokenBalances, getWallet, setTokenBalances, Market, ChainNativeTokenByChainId, getNetworkInfo } from '@buyback/store';
 import Assets from '@buyback/assets';
-import moment from 'moment';
 import { BigNumber, Wallet, WalletPlugin } from '@ijstech/eth-wallet';
-import { Result } from '../result';
-import {  maxHeight, maxWidth } from '../config';
-import './buyback.css';
 import { getGuaranteedBuyBackInfo, GuaranteedBuyBackInfo } from '@buyback/queue-utils';
-import { PanelConfig } from './panelConfig';
 import { executeSwap, getApprovalModelAction, setApprovalModalSpenderAddress } from '@buyback/swap-utils';
+import { Result } from '@buyback/result';
+import './index.css';
+import { PanelConfig } from './panelConfig/index';
+
+const maxHeight = '321px';
+const maxWidth = '690px';
 
 declare global {
 	namespace JSX {
@@ -578,7 +579,7 @@ export class BuybackBlock extends Module implements PageBlock {
 			vStackEndTime.appendChild(
 				<i-label caption={formatDate(info.endDate)} font={{ size: '16px', bold: true }} lineHeight="29px" />
 			);
-			let interval: NodeJS.Timeout;
+			let interval: any;
 			const setTimer = () => {
 				const { startDate, endDate } = info;
 				let days = 0;
