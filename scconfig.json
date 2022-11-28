@@ -28,5 +28,9 @@
     }
   },
   "dependencies": {
+    "@ijstech/eth-contract": "*",
+    "@openswap/sdk": "*",
+    "@openswap/chainlink-sdk": "*",
+    "@openswap/oracle-adaptor-sdk": "*"
   }
 }
