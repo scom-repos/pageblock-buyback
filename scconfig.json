@@ -1,0 +1,36 @@
+{
+  "name": "@buyback/main",
+  "env": "mainnet",
+  "version": "0.1.0",
+  "moduleDir": "src",
+  "main": "@buyback/main",
+  "modules": {
+    "@buyback/assets": {
+      "path": "assets"
+    },
+    "@buyback/global": {
+      "path": "global"
+    },
+    "@buyback/store": {
+      "path": "store"
+    },
+    "@buyback/queue-utils": {
+      "path": "queue-utils"
+    },
+    "@buyback/swap-utils": {
+      "path": "swap-utils"
+    },
+    "@buyback/result": {
+      "path": "result"
+    },
+    "@buyback/main": {
+      "path": "main"
+    }
+  },
+  "dependencies": {
+    "@ijstech/eth-contract": "*",
+    "@openswap/sdk": "*",
+    "@openswap/chainlink-sdk": "*",
+    "@openswap/oracle-adaptor-sdk": "*"
+  }
+}
