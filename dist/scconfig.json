@@ -1,0 +1,86 @@
+{
+    "name": "@buyback/main",
+    "env": "mainnet",
+    "version": "0.1.0",
+    "moduleDir": "modules",
+    "main": "@buyback/main",
+    "modules": {
+        "@buyback/assets": {
+            "path": "assets",
+            "dependencies": []
+        },
+        "@buyback/global": {
+            "path": "global",
+            "dependencies": [
+                "@ijstech/eth-wallet",
+                "@openswap/sdk"
+            ]
+        },
+        "@buyback/store": {
+            "path": "store",
+            "dependencies": [
+                "@ijstech/eth-wallet",
+                "@buyback/global",
+                "@openswap/sdk",
+                "@buyback/assets"
+            ]
+        },
+        "@buyback/queue-utils": {
+            "path": "queue-utils",
+            "dependencies": [
+                "@buyback/global",
+                "@ijstech/eth-wallet",
+                "@buyback/assets",
+                "@buyback/store",
+                "@openswap/sdk",
+                "@openswap/chainlink-sdk",
+                "@openswap/oracle-adaptor-sdk"
+            ]
+        },
+        "@buyback/swap-utils": {
+            "path": "swap-utils",
+            "dependencies": [
+                "@ijstech/eth-wallet",
+                "@openswap/sdk",
+                "@buyback/global",
+                "@buyback/assets",
+                "@buyback/store",
+                "@openswap/oracle-adaptor-sdk",
+                "@openswap/chainlink-sdk",
+                "@buyback/queue-utils"
+            ]
+        },
+        "@buyback/result": {
+            "path": "result",
+            "dependencies": [
+                "@ijstech/eth-wallet",
+                "@openswap/sdk",
+                "@buyback/global",
+                "@buyback/store",
+                "@buyback/assets"
+            ]
+        },
+        "@buyback/main": {
+            "path": "main",
+            "dependencies": [
+                "@ijstech/eth-wallet",
+                "@buyback/assets",
+                "@openswap/sdk",
+                "@buyback/global",
+                "@buyback/store",
+                "@openswap/oracle-adaptor-sdk",
+                "@openswap/chainlink-sdk",
+                "@buyback/queue-utils",
+                "@buyback/swap-utils",
+                "@buyback/result"
+            ]
+        }
+    },
+    "dependencies": {
+        "@ijstech/eth-wallet": "*",
+        "@ijstech/eth-contract": "*",
+        "@openswap/oracle-adaptor-sdk": "*",
+        "@openswap/chainlink-sdk": "*",
+        "@openswap/sdk": "*"
+    }
+}
