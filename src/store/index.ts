@@ -1,4 +1,5 @@
 import { Erc20, Wallet, WalletPlugin } from '@ijstech/eth-wallet';
+import { application } from '@ijstech/components';
 import {
   ITokenObject,
   SITE_ENV,
@@ -7,9 +8,8 @@ import {
   INetwork,
   EventId,
 } from '@buyback/global';
-
+import { Contracts } from "@openswap/sdk";
 import Assets from '@buyback/assets';
-import { Contracts } from '@openswap/sdk';
 import {
   DefaultTokens,
   CoreContractAddressesByChainId,
@@ -17,7 +17,6 @@ import {
   WETHByChainId,
   getTokenIconPath,
 } from './data/index';
-import { application } from '@ijstech/components';
 
 export const fallBackUrl = Assets.fullPath('img/tokens/token-placeholder.svg');
 

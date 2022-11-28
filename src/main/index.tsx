@@ -1,4 +1,4 @@
-import { Module, Panel, Button, Label, VStack, Container, customElements, ControlElement, IEventBus, application, customModule, Modal, Input, moment } from '@ijstech/components';
+import { Styles, Module, Panel, Button, Label, VStack, Container, customElements, ControlElement, IEventBus, application, customModule, Modal, Input, moment } from '@ijstech/components';
 import { BigNumber, Wallet, WalletPlugin } from '@ijstech/eth-wallet';
 import Assets from '@buyback/assets';
 import { formatNumber, formatDate, PageBlock, EventId, limitInputNumber, limitDecimals, IERC20ApprovalAction, QueueType, ITokenObject } from '@buyback/global';
@@ -6,9 +6,10 @@ import { InfuraId, Networks, getChainId, getTokenMap, isWalletConnected, setToke
 import { getGuaranteedBuyBackInfo, GuaranteedBuyBackInfo } from '@buyback/queue-utils';
 import { executeSwap, getApprovalModelAction, setApprovalModalSpenderAddress } from '@buyback/swap-utils';
 import { Result } from '@buyback/result';
-import './index.css';
 import { PanelConfig } from './panelConfig/index';
+import './index.css';
 
+Styles.Theme.applyTheme(Styles.Theme.darkTheme);
 const maxHeight = '321px';
 const maxWidth = '690px';
 

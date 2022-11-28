@@ -11,8 +11,6 @@
     "declaration": false,
     "baseUrl": ".",
     "paths": {
-      "@ijstech/components": ["node_modules/@ijstech/components"],
-      "@openswap/sdk": ["node_modules/@openswap/sdk"],
       "@buyback/*": ["src/*"]
     }
   },
