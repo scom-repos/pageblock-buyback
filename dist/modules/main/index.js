@@ -2356,8 +2356,7 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
         }
     };
     BuybackBlock = __decorate([
-        components_8.customModule,
-        components_8.customElements('i-section-buyback')
+        components_8.customModule
     ], BuybackBlock);
     exports.BuybackBlock = BuybackBlock;
 });
