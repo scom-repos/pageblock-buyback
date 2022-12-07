@@ -25,6 +25,9 @@
     },
     "@buyback/main": {
       "path": "main"
+    },
+    "@buyback/panel-config": {
+      "path": "panel-config"
     }
   },
   "dependencies": {

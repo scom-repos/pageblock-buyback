@@ -6,7 +6,7 @@ import { InfuraId, Networks, getChainId, getTokenMap, isWalletConnected, setToke
 import { getGuaranteedBuyBackInfo, GuaranteedBuyBackInfo } from '@buyback/queue-utils';
 import { executeSwap, getApprovalModelAction, setApprovalModalSpenderAddress } from '@buyback/swap-utils';
 import { Result } from '@buyback/result';
-import { PanelConfig } from './panelConfig/index';
+import { PanelConfig } from '@buyback/panel-config';
 import './index.css';
 
 Styles.Theme.applyTheme(Styles.Theme.darkTheme);
