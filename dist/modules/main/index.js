@@ -863,6 +863,7 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
             }
         }
         async discard() {
+            console.log('discard');
             this.pnlConfig.visible = false;
             this.buybackLayout.visible = true;
         }
