@@ -72,7 +72,19 @@
                 "@openswap/chainlink-sdk",
                 "@buyback/queue-utils",
                 "@buyback/swap-utils",
-                "@buyback/result"
+                "@buyback/result",
+                "@buyback/panel-config"
+            ]
+        },
+        "@buyback/panel-config": {
+            "path": "panel-config",
+            "dependencies": [
+                "@openswap/sdk",
+                "@buyback/global",
+                "@buyback/store",
+                "@buyback/result",
+                "@buyback/assets",
+                "@ijstech/eth-wallet"
             ]
         }
     },
