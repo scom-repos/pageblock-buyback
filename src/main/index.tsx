@@ -1,4 +1,4 @@
-import { Styles, Module, Panel, Button, Label, VStack, Container, customElements, ControlElement, IEventBus, application, customModule, Modal, Input, moment } from '@ijstech/components';
+import { Styles, Module, Panel, Button, Label, VStack, Container, ControlElement, IEventBus, application, customModule, Modal, Input, moment } from '@ijstech/components';
 import { BigNumber, Wallet, WalletPlugin } from '@ijstech/eth-wallet';
 import Assets from '@buyback/assets';
 import { formatNumber, formatDate, PageBlock, EventId, limitInputNumber, limitDecimals, IERC20ApprovalAction, QueueType, ITokenObject } from '@buyback/global';
@@ -6,7 +6,7 @@ import { InfuraId, Networks, getChainId, getTokenMap, isWalletConnected, setToke
 import { getGuaranteedBuyBackInfo, GuaranteedBuyBackInfo } from '@buyback/queue-utils';
 import { executeSwap, getApprovalModelAction, setApprovalModalSpenderAddress } from '@buyback/swap-utils';
 import { Result } from '@buyback/result';
-import { PanelConfig } from './panelConfig/index';
+import { PanelConfig } from '@buyback/panel-config';
 import './index.css';
 
 Styles.Theme.applyTheme(Styles.Theme.darkTheme);
@@ -22,7 +22,6 @@ declare global {
 }
 
 @customModule
-@customElements('i-section-buyback')
 export class BuybackBlock extends Module implements PageBlock {
 	private data: GuaranteedBuyBackCampaign;
 	readonly onEdit: () => Promise<void>;

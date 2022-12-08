@@ -6,12 +6,12 @@ import { TokenSelection } from './token-selection/index';
 declare global {
 	namespace JSX {
 		interface IntrinsicElements {
-			['campaign-config']: ControlElement;
+			['buyback-campaign-config']: ControlElement;
 		}
 	}
 };
 
-@customElements('campaign-config')
+@customElements('buyback-campaign-config')
 export class CampaignConfig extends Module {
 	private inputName: Input;
 	private inputOfferIndex: Input;

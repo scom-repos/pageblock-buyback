@@ -7,12 +7,12 @@ import './panel-config.css';
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      ['panel-config']: ControlElement;
+      ['buyback-panel-config']: ControlElement;
     }
   }
 };
 
-@customElements('panel-config')
+@customElements('buyback-panel-config')
 export class PanelConfig extends Module {
   private backElm: HStack;
   private wrapperNetworkElm: HStack;
