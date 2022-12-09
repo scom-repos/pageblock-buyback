@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components", "@buyback/assets"], function (require, exports, components_1, assets_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    components_1.Styles.Theme.darkTheme.background.default = '#192046';
     const colorVar = {
         primaryButton: 'transparent linear-gradient(90deg, #AC1D78 0%, #E04862 100%) 0% 0% no-repeat padding-box',
         primaryGradient: 'linear-gradient(255deg,#f15e61,#b52082)',
@@ -334,7 +333,6 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BuybackBlock = void 0;
-    components_2.Styles.Theme.applyTheme(components_2.Styles.Theme.darkTheme);
     const maxHeight = '321px';
     const maxWidth = '690px';
     let BuybackBlock = class BuybackBlock extends components_2.Module {
@@ -863,7 +861,6 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
             }
         }
         async discard() {
-            console.log('discard');
             this.pnlConfig.visible = false;
             this.buybackLayout.visible = true;
         }

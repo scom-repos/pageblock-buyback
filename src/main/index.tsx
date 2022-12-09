@@ -9,7 +9,6 @@ import { Result } from '@buyback/result';
 import { PanelConfig } from '@buyback/panel-config';
 import './index.css';
 
-Styles.Theme.applyTheme(Styles.Theme.darkTheme);
 const maxHeight = '321px';
 const maxWidth = '690px';
 
