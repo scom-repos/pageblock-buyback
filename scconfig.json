@@ -35,5 +35,15 @@
     "@openswap/sdk": "*",
     "@openswap/chainlink-sdk": "*",
     "@openswap/oracle-adaptor-sdk": "*"
+  },
+  "contractInfo": {
+    "43113": {
+      "ProductInfo": {
+        "address": "0x450e6119018a95C33e56b588B44f58F5B251Db7a"
+      },
+      "Proxy": {
+        "address": "0x44ef4Ff71043f491ED6D69C61aF97eaA66f76CFb"
+      }
+    }
   }
 }
