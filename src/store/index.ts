@@ -189,7 +189,7 @@ export const state = {
   tokenMap: {} as TokenMapType,
   userTokens: {} as {[key: string]: ITokenObject[]},
   infuraId: "",
-  networkMap: {} as { [key: number]: INetwork }
+  networkMap: {} as { [key: number]: INetwork },
 }
 
 export const setDataFromSCConfig = (networkList: INetwork[], infuraId: string) => {
@@ -584,13 +584,6 @@ export const hasMetaMask = function () {
 
 export interface IContractDetailInfo {
   address: string;
-}
-
-export interface IContractInfo {
-  TriplayERC20Vault: IContractDetailInfo;
-  TriplayERC721Vault: IContractDetailInfo;
-  TriplayERC1155Vault: IContractDetailInfo;
-  TriplayPolicy: IContractDetailInfo;
 }
 
 export * from './data/index'

@@ -3558,7 +3558,7 @@ define("@buyback/store", ["require", "exports", "@ijstech/eth-wallet", "@ijstech
         tokenMap: {},
         userTokens: {},
         infuraId: "",
-        networkMap: {}
+        networkMap: {},
     };
     const setDataFromSCConfig = (networkList, infuraId) => {
         if (infuraId) {
