@@ -603,9 +603,8 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
             };
             this.renderBuybackCampaign = async () => {
                 if (this.buybackInfo) {
-                    console.log(this.buybackInfo);
                     this.buybackElm.clearInnerHTML();
-                    const { queueInfo } = this.buybackInfo;
+                    const { queueInfo, pairAddress } = this.buybackInfo;
                     const info = queueInfo || {};
                     const firstSymbol = store_1.tokenSymbol(this.getValueByKey('toTokenAddress'));
                     const vStackTimer = await components_2.VStack.create({ gap: 4, verticalAlignment: 'center' });
@@ -625,7 +624,7 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                             this.$render("i-label", { caption: "H", class: "timer-unit" }),
                             endMin,
                             this.$render("i-label", { caption: "M", class: "timer-unit" }))));
-                    const vStackEndTime = await components_2.HStack.create({ gap: 4, verticalAlignment: 'center' });
+                    const vStackEndTime = await components_2.HStack.create({ gap: 4, verticalAlignment: 'center', margin: { top: '0.75rem' } });
                     const lbEndTime = await components_2.Label.create({ caption: 'Estimated End Time: ', font: { size: '0.875rem', bold: true } });
                     vStackEndTime.appendChild(lbEndTime);
                     vStackEndTime.appendChild(this.$render("i-label", { caption: global_1.formatDate(info.endDate), font: { size: '0.875rem' } }));
@@ -671,7 +670,7 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                                 this.$render("i-hstack", { gap: 4, verticalAlignment: "center" },
                                     this.$render("i-label", { caption: "Buyback Price: ", font: { bold: true } }),
                                     this.$render("i-label", { caption: `${1 / this.getValueByKey('offerPrice')} ${store_1.tokenSymbol(this.getValueByKey('fromTokenAddress'))}`, font: { bold: true } })),
-                                this.$render("i-label", { caption: "I don't have a digital wallet", link: { href: "#" }, font: { size: '0.8125rem' } })),
+                                this.$render("i-label", { caption: "I don't have a digital wallet", font: { size: '0.8125rem' }, link: { href: 'https://metamask.io/' } })),
                             vStackEndTime),
                         this.$render("i-hstack", { gap: 20, margin: { top: 15 }, verticalAlignment: "center" },
                             this.$render("i-vstack", { gap: 4, width: "100%", verticalAlignment: "space-between" },
@@ -695,11 +694,9 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                                 this.$render("i-button", { id: 'btnSwap', width: '100px', caption: 'Sell', padding: { top: '0.5rem', bottom: '0.5rem', left: '1rem', right: '1rem' }, font: { size: '0.875rem', color: Theme.colors.primary.contrastText }, rightIcon: { visible: false, fill: Theme.colors.primary.contrastText }, onClick: this.onSwap.bind(this) }))),
                         this.$render("i-vstack", { gap: "0.5rem" },
                             this.$render("i-vstack", { gap: '0.25rem' },
-                                this.$render("i-label", { id: 'lblRef', font: { size: '0.75rem' } }),
-                                this.$render("i-label", { id: 'lblAddress', font: { size: '0.75rem' }, overflowWrap: 'anywhere' })),
+                                this.$render("i-label", { caption: 'smart contract:', font: { size: '0.75rem' } }),
+                                this.$render("i-label", { caption: pairAddress, font: { size: '0.75rem' }, overflowWrap: 'anywhere' })),
                             this.$render("i-label", { caption: 'Terms & Condition', font: { size: '0.75rem' }, link: { href: 'https://docs.scom.dev/' } }))));
-                    this.lblRef.caption = 'smart contract:';
-                    this.lblAddress.caption = store_1.getContractAddress('ProductInfo');
                 }
                 else {
                     this.renderEmpty();
@@ -838,9 +835,9 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                 }
             }
             if ((_b = this.btnSwap) === null || _b === void 0 ? void 0 : _b.rightIcon.visible) {
-                return 'Swapping';
+                return 'Selling';
             }
-            return 'Swap';
+            return 'Sell';
         }
         ;
         render() {

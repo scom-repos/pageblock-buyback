@@ -189,19 +189,15 @@ export const state = {
   tokenMap: {} as TokenMapType,
   userTokens: {} as {[key: string]: ITokenObject[]},
   infuraId: "",
-  networkMap: {} as { [key: number]: INetwork },
-  contractInfoByChain: {} as ContractInfoByChainType
+  networkMap: {} as { [key: number]: INetwork }
 }
 
-export const setDataFromSCConfig = (networkList: INetwork[], infuraId: string, contractInfo?: ContractInfoByChainType) => {
+export const setDataFromSCConfig = (networkList: INetwork[], infuraId: string) => {
   if (infuraId) {
     setInfuraId(infuraId)
   }			
   if (networkList) {
     setNetworkList(networkList)
-  }
-  if (contractInfo) {
-    setContractInfo(contractInfo);
   }
 }
 
@@ -595,24 +591,6 @@ export interface IContractInfo {
   TriplayERC721Vault: IContractDetailInfo;
   TriplayERC1155Vault: IContractDetailInfo;
   TriplayPolicy: IContractDetailInfo;
-}
-
-export type ContractType = 'ProductInfo' | 'Proxy';
-
-export type ContractInfoByChainType = { [key: number]: IContractInfo };
-
-export const setContractInfo = (data: ContractInfoByChainType) => {
-  state.contractInfoByChain = data;
-}
-
-export const getContractInfo = (chainId: number) => {
-  return state.contractInfoByChain[chainId];
-}
-
-export const getContractAddress = (type: ContractType) => {
-  const chainId = Wallet.getInstance().chainId;
-  const contracts = getContractInfo(chainId) || {};
-  return contracts[type]?.address;
 }
 
 export * from './data/index'

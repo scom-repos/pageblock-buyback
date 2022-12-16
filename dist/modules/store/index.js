@@ -3381,7 +3381,7 @@ define("@buyback/store/data/index.ts", ["require", "exports", "@buyback/store/da
 define("@buyback/store", ["require", "exports", "@ijstech/eth-wallet", "@ijstech/components", "@buyback/global", "@openswap/sdk", "@buyback/assets", "@buyback/store/data/index.ts", "@buyback/store/data/index.ts"], function (require, exports, eth_wallet_1, components_1, global_1, sdk_1, assets_2, index_7, index_8) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.getContractAddress = exports.getContractInfo = exports.setContractInfo = exports.hasMetaMask = exports.hasWallet = exports.logoutWallet = exports.switchNetwork = exports.connectWallet = exports.isWalletConnected = exports.getWalletOptions = exports.walletList = exports.viewOnExplorerByAddress = exports.viewOnExplorerByTxHash = exports.hasUserToken = exports.setUserTokens = exports.tokenSymbol = exports.getTokenIcon = exports.getTokenDecimals = exports.getTokensDataList = exports.getTokenMap = exports.setTokenMap = exports.getTokenMapData = exports.getTokenObject = exports.projectNativeTokenSymbol = exports.projectNativeToken = exports.getNetworkImg = exports.getNetworkExplorerName = exports.getSiteSupportedNetworks = exports.getMatchNetworks = exports.getFilteredNetworks = exports.getNetworkInfo = exports.getInfuraId = exports.getDefaultChainId = exports.setDataFromSCConfig = exports.state = exports.setTokenBalances = exports.getTokenBalance = exports.getTokenBalances = exports.updateAllTokenBalances = exports.getTokenList = exports.setTransactionDeadline = exports.getTransactionDeadline = exports.setSlippageTolerance = exports.getSlippageTolerance = exports.toggleExpertMode = exports.isExpertMode = exports.getErc20 = exports.getWalletProvider = exports.getWallet = exports.getChainId = exports.getWETH = exports.getChainNativeToken = exports.getAddresses = exports.getCurrentChainId = exports.setCurrentChainId = exports.getSiteEnv = exports.setSiteEnv = exports.addUserTokens = exports.getUserTokens = exports.nullAddress = exports.fallBackUrl = void 0;
+    exports.hasMetaMask = exports.hasWallet = exports.logoutWallet = exports.switchNetwork = exports.connectWallet = exports.isWalletConnected = exports.getWalletOptions = exports.walletList = exports.viewOnExplorerByAddress = exports.viewOnExplorerByTxHash = exports.hasUserToken = exports.setUserTokens = exports.tokenSymbol = exports.getTokenIcon = exports.getTokenDecimals = exports.getTokensDataList = exports.getTokenMap = exports.setTokenMap = exports.getTokenMapData = exports.getTokenObject = exports.projectNativeTokenSymbol = exports.projectNativeToken = exports.getNetworkImg = exports.getNetworkExplorerName = exports.getSiteSupportedNetworks = exports.getMatchNetworks = exports.getFilteredNetworks = exports.getNetworkInfo = exports.getInfuraId = exports.getDefaultChainId = exports.setDataFromSCConfig = exports.state = exports.setTokenBalances = exports.getTokenBalance = exports.getTokenBalances = exports.updateAllTokenBalances = exports.getTokenList = exports.setTransactionDeadline = exports.getTransactionDeadline = exports.setSlippageTolerance = exports.getSlippageTolerance = exports.toggleExpertMode = exports.isExpertMode = exports.getErc20 = exports.getWalletProvider = exports.getWallet = exports.getChainId = exports.getWETH = exports.getChainNativeToken = exports.getAddresses = exports.getCurrentChainId = exports.setCurrentChainId = exports.getSiteEnv = exports.setSiteEnv = exports.addUserTokens = exports.getUserTokens = exports.nullAddress = exports.fallBackUrl = void 0;
     exports.fallBackUrl = assets_2.default.fullPath('img/tokens/token-placeholder.svg');
     exports.nullAddress = "0x0000000000000000000000000000000000000000";
     const TOKENS = "oswap_user_tokens_";
@@ -3558,18 +3558,14 @@ define("@buyback/store", ["require", "exports", "@ijstech/eth-wallet", "@ijstech
         tokenMap: {},
         userTokens: {},
         infuraId: "",
-        networkMap: {},
-        contractInfoByChain: {}
+        networkMap: {}
     };
-    const setDataFromSCConfig = (networkList, infuraId, contractInfo) => {
+    const setDataFromSCConfig = (networkList, infuraId) => {
         if (infuraId) {
             setInfuraId(infuraId);
         }
         if (networkList) {
             setNetworkList(networkList);
-        }
-        if (contractInfo) {
-            exports.setContractInfo(contractInfo);
         }
     };
     exports.setDataFromSCConfig = setDataFromSCConfig;
@@ -3952,20 +3948,5 @@ define("@buyback/store", ["require", "exports", "@ijstech/eth-wallet", "@ijstech
         return eth_wallet_1.Wallet.isInstalled(eth_wallet_1.WalletPlugin.MetaMask);
     };
     exports.hasMetaMask = hasMetaMask;
-    const setContractInfo = (data) => {
-        exports.state.contractInfoByChain = data;
-    };
-    exports.setContractInfo = setContractInfo;
-    const getContractInfo = (chainId) => {
-        return exports.state.contractInfoByChain[chainId];
-    };
-    exports.getContractInfo = getContractInfo;
-    const getContractAddress = (type) => {
-        var _a;
-        const chainId = eth_wallet_1.Wallet.getInstance().chainId;
-        const contracts = exports.getContractInfo(chainId) || {};
-        return (_a = contracts[type]) === null || _a === void 0 ? void 0 : _a.address;
-    };
-    exports.getContractAddress = getContractAddress;
     __exportStar(index_8, exports);
 });

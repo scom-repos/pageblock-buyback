@@ -2,7 +2,7 @@ import { Styles, Module, Panel, Button, Label, VStack, Container, ControlElement
 import { BigNumber, Wallet, WalletPlugin } from '@ijstech/eth-wallet';
 import Assets from '@buyback/assets';
 import { formatNumber, formatDate, PageBlock, EventId, limitInputNumber, limitDecimals, IERC20ApprovalAction, QueueType, ITokenObject } from '@buyback/global';
-import { InfuraId, Networks, getChainId, getTokenMap, isWalletConnected, setTokenMap, getDefaultChainId, hasWallet, connectWallet, setDataFromSCConfig, setCurrentChainId, tokenSymbol, GuaranteedBuyBackCampaign, getTokenIcon, fallBackUrl, getTokenBalances, getWallet, setTokenBalances, Market, ChainNativeTokenByChainId, getNetworkInfo, getContractAddress } from '@buyback/store';
+import { InfuraId, Networks, getChainId, getTokenMap, isWalletConnected, setTokenMap, getDefaultChainId, hasWallet, connectWallet, setDataFromSCConfig, setCurrentChainId, tokenSymbol, GuaranteedBuyBackCampaign, getTokenIcon, fallBackUrl, getTokenBalances, getWallet, setTokenBalances, Market, ChainNativeTokenByChainId, getNetworkInfo } from '@buyback/store';
 import { getGuaranteedBuyBackInfo, GuaranteedBuyBackInfo } from '@buyback/queue-utils';
 import { executeSwap, getApprovalModelAction, setApprovalModalSpenderAddress } from '@buyback/swap-utils';
 import { Result } from '@buyback/result';
@@ -23,8 +23,6 @@ export class BuybackBlock extends Module implements PageBlock {
 	private gridDApp: GridLayout;
 	private leftStack: VStack;
 	private emptyStack: VStack;
-	private lblRef: Label;
-  private lblAddress: Label;
 	
 	private pnlConfig: PanelConfig;
 	private $eventBus: IEventBus;
@@ -394,9 +392,9 @@ export class BuybackBlock extends Module implements PageBlock {
       }
     }
     if (this.btnSwap?.rightIcon.visible) {
-      return 'Swapping';
+      return 'Selling';
     }
-    return 'Swap';
+    return 'Sell';
   };
 
 	private initApprovalModelAction = async () => {
@@ -543,9 +541,8 @@ export class BuybackBlock extends Module implements PageBlock {
 
 	private renderBuybackCampaign = async () => {
 		if (this.buybackInfo) {
-			console.log(this.buybackInfo)
 			this.buybackElm.clearInnerHTML();
-			const { queueInfo } = this.buybackInfo;
+			const { queueInfo, pairAddress } = this.buybackInfo;
 			const info = queueInfo || {} as any;
 			const firstSymbol = tokenSymbol(this.getValueByKey('toTokenAddress'));
 
@@ -571,7 +568,7 @@ export class BuybackBlock extends Module implements PageBlock {
 				</i-panel>
 			);
 
-			const vStackEndTime = await HStack.create({ gap: 4, verticalAlignment: 'center' });
+			const vStackEndTime = await HStack.create({ gap: 4, verticalAlignment: 'center', margin: {top: '0.75rem'} });
 			const lbEndTime = await Label.create({ caption: 'Estimated End Time: ', font: { size: '0.875rem', bold: true } });
 			vStackEndTime.appendChild(lbEndTime);
 			vStackEndTime.appendChild(<i-label caption={formatDate(info.endDate)} font={{ size: '0.875rem'}} />);
@@ -620,7 +617,7 @@ export class BuybackBlock extends Module implements PageBlock {
 									font={{ bold: true }}
 								/>
 							</i-hstack>
-							<i-label caption="I don't have a digital wallet" link={{href: "#"}} font={{size: '0.8125rem'}}></i-label>
+							<i-label caption="I don't have a digital wallet" font={{ size: '0.8125rem' }} link={{ href: 'https://metamask.io/' }}></i-label>
 						</i-vstack>
 						{/* { vStackTimer } */}
 						{ vStackEndTime }
@@ -688,15 +685,13 @@ export class BuybackBlock extends Module implements PageBlock {
 					</i-vstack>
 					<i-vstack gap="0.5rem">
 						<i-vstack gap='0.25rem'>
-							<i-label id='lblRef' font={{ size: '0.75rem' }}></i-label>
-							<i-label id='lblAddress' font={{ size: '0.75rem' }} overflowWrap='anywhere'></i-label>
+							<i-label caption='smart contract:' font={{ size: '0.75rem' }}></i-label>
+							<i-label caption={pairAddress} font={{ size: '0.75rem' }} overflowWrap='anywhere'></i-label>
 						</i-vstack>
 						<i-label caption='Terms & Condition' font={{ size: '0.75rem' }} link={{ href: 'https://docs.scom.dev/' }}></i-label>
 					</i-vstack>
         </i-panel>
 			)
-			this.lblRef.caption = 'smart contract:';
-			this.lblAddress.caption = getContractAddress('ProductInfo');
 		} else {
 			this.renderEmpty();
 		}
