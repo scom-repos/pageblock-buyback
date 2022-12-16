@@ -159,7 +159,6 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
                 width: '100% !important',
                 height: '100% !important',
                 backgroundColor: 'transparent',
-                color: '#fff',
                 fontSize: '1rem',
                 textAlign: 'right',
             },
