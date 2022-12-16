@@ -1,6 +1,8 @@
 import { Styles } from '@ijstech/components';
 import Assets from '@buyback/assets';
 
+const Theme = Styles.Theme.ThemeVars;
+
 const colorVar = {
   primaryButton: 'transparent linear-gradient(90deg, #AC1D78 0%, #E04862 100%) 0% 0% no-repeat padding-box',
   primaryGradient: 'linear-gradient(255deg,#f15e61,#b52082)',
@@ -83,19 +85,13 @@ Styles.cssRule('.pageblock-buyback', {
   $nest: {
     'i-label': {
       fontFamily: 'Montserrat Regular',
-      color: '#fff',
+      color: Theme.text.primary
     },
     'span': {
       letterSpacing: '0.15px',
     },
-    '#buybackElm': {
-      background: '#0c1234',
-    },
     '.i-loading-overlay': {
-      background: '#0c1234',
-    },
-    '.overflow-inherit': {
-      overflow: 'inherit',
+      background: Theme.background.modal,
     },
     '::selection': {
       color: '#fff',
@@ -130,46 +126,9 @@ Styles.cssRule('.pageblock-buyback', {
       background: colorVar.primaryDisabled,
       opacity: 1
     },
-    '.dark-bg, .dark-modal > div > div': {
-      background: colorVar.darkBg,
-      borderRadius: 5
-    },
-    '.btn-transparent, .btn-transparent:not(.disabled):focus, .btn-transparent:not(.disabled):hover': {
-      background: 'transparent',
-      boxShadow: 'none',
-      backgroundColor: 'transparent'
-    },
-    '.mr-0-5': {
-      marginRight: '.5rem'
-    },
-    '.ml-0-5': {
-      marginLeft: '.5rem'
-    },
-    '.mb-0-5': {
-      marginBottom: '.5rem'
-    },
-    '.hidden': {
-      display: 'none !important'
-    },
-    '.no-wrap': {
-      whiteSpace: 'nowrap'
-    },
-    '.flex-nowrap': {
-      flexWrap: 'nowrap',
-    },
-    '.py-1': {
-      paddingTop: '1rem',
-      paddingBottom: '1rem'
-    },
-    '.px-1': {
-      paddingLeft: '1rem',
-      paddingRight: '1rem'
-    },
-    '.align-middle': {
-      alignItems: 'center'
-    },
     '.buyback-layout': {
       width: '100%',
+      minHeight: 100,
       marginInline: 'auto',
       overflow: 'hidden',
     },
@@ -177,65 +136,8 @@ Styles.cssRule('.pageblock-buyback', {
       display: 'flex',
       $nest: {
         '&:hover *': {
-          color: '#fff',
-          opacity: 0.9,
+          color: Theme.colors.primary.main
         },
-      },
-    },
-    '.opacity-50': {
-      opacity: 0.5
-    },
-    '.cursor-default': {
-      cursor: 'default',
-    },
-    '.text-overflow': {
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-    },
-    '.wrapper': {
-      width: '100%',
-      height: '100%',
-      maxWidth: '690px',
-      maxHeight: '321px',
-      $nest: {
-        '.bg-color': {
-          display: 'flex',
-          flexDirection: 'column',
-          color: '#fff',
-          minHeight: '485px',
-          height: '100%',
-          borderRadius: '15px',
-          paddingBottom: '1rem',
-          position: 'relative',
-        },
-        '.btn-import, .btn-swap': {
-          width: 370,
-          maxWidth: '100%',
-          padding: '0.625rem 0',
-          marginBottom: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontWeight: 700,
-          borderRadius: 12,
-        },
-        '.no-buyback': {
-          padding: '3rem 2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          textAlign: 'center',
-          justifyContent: 'center',
-          $nest: {
-            'i-label > *': {
-              fontSize: '1.5rem',
-              marginTop: '1rem',
-            }
-          }
-        },
-        '.slider-arrow': {
-          fill: '#f15e61',
-        }
       },
     },
     '.custom-timer': {
@@ -278,12 +180,6 @@ Styles.cssRule('.pageblock-buyback', {
       background: 'linear-gradient(255deg,#f15e61,#b52082)',
       borderRadius:' 0.75rem',
       padding: '0.1rem 0.5rem',
-    },
-    '.ml-auto': {
-      marginLeft: 'auto',
-    },
-    '.mr-025': {
-      marginRight: '0.25rem',
     },
     '.input-disabled': {
       opacity: 0.4,
@@ -334,3 +230,4 @@ Styles.cssRule('.pageblock-buyback', {
     },
   }
 })
+

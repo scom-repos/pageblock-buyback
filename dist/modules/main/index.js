@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components", "@buyback/assets"], function (require, exports, components_1, assets_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    const Theme = components_1.Styles.Theme.ThemeVars;
     const colorVar = {
         primaryButton: 'transparent linear-gradient(90deg, #AC1D78 0%, #E04862 100%) 0% 0% no-repeat padding-box',
         primaryGradient: 'linear-gradient(255deg,#f15e61,#b52082)',
@@ -77,19 +78,13 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
         $nest: {
             'i-label': {
                 fontFamily: 'Montserrat Regular',
-                color: '#fff',
+                color: Theme.text.primary
             },
             'span': {
                 letterSpacing: '0.15px',
             },
-            '#buybackElm': {
-                background: '#0c1234',
-            },
             '.i-loading-overlay': {
-                background: '#0c1234',
-            },
-            '.overflow-inherit': {
-                overflow: 'inherit',
+                background: Theme.background.modal,
             },
             '::selection': {
                 color: '#fff',
@@ -124,46 +119,9 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
                 background: colorVar.primaryDisabled,
                 opacity: 1
             },
-            '.dark-bg, .dark-modal > div > div': {
-                background: colorVar.darkBg,
-                borderRadius: 5
-            },
-            '.btn-transparent, .btn-transparent:not(.disabled):focus, .btn-transparent:not(.disabled):hover': {
-                background: 'transparent',
-                boxShadow: 'none',
-                backgroundColor: 'transparent'
-            },
-            '.mr-0-5': {
-                marginRight: '.5rem'
-            },
-            '.ml-0-5': {
-                marginLeft: '.5rem'
-            },
-            '.mb-0-5': {
-                marginBottom: '.5rem'
-            },
-            '.hidden': {
-                display: 'none !important'
-            },
-            '.no-wrap': {
-                whiteSpace: 'nowrap'
-            },
-            '.flex-nowrap': {
-                flexWrap: 'nowrap',
-            },
-            '.py-1': {
-                paddingTop: '1rem',
-                paddingBottom: '1rem'
-            },
-            '.px-1': {
-                paddingLeft: '1rem',
-                paddingRight: '1rem'
-            },
-            '.align-middle': {
-                alignItems: 'center'
-            },
             '.buyback-layout': {
                 width: '100%',
+                minHeight: 100,
                 marginInline: 'auto',
                 overflow: 'hidden',
             },
@@ -171,65 +129,8 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
                 display: 'flex',
                 $nest: {
                     '&:hover *': {
-                        color: '#fff',
-                        opacity: 0.9,
+                        color: Theme.colors.primary.main
                     },
-                },
-            },
-            '.opacity-50': {
-                opacity: 0.5
-            },
-            '.cursor-default': {
-                cursor: 'default',
-            },
-            '.text-overflow': {
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-            },
-            '.wrapper': {
-                width: '100%',
-                height: '100%',
-                maxWidth: '690px',
-                maxHeight: '321px',
-                $nest: {
-                    '.bg-color': {
-                        display: 'flex',
-                        flexDirection: 'column',
-                        color: '#fff',
-                        minHeight: '485px',
-                        height: '100%',
-                        borderRadius: '15px',
-                        paddingBottom: '1rem',
-                        position: 'relative',
-                    },
-                    '.btn-import, .btn-swap': {
-                        width: 370,
-                        maxWidth: '100%',
-                        padding: '0.625rem 0',
-                        marginBottom: '10px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontWeight: 700,
-                        borderRadius: 12,
-                    },
-                    '.no-buyback': {
-                        padding: '3rem 2rem',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        textAlign: 'center',
-                        justifyContent: 'center',
-                        $nest: {
-                            'i-label > *': {
-                                fontSize: '1.5rem',
-                                marginTop: '1rem',
-                            }
-                        }
-                    },
-                    '.slider-arrow': {
-                        fill: '#f15e61',
-                    }
                 },
             },
             '.custom-timer': {
@@ -272,12 +173,6 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
                 background: 'linear-gradient(255deg,#f15e61,#b52082)',
                 borderRadius: ' 0.75rem',
                 padding: '0.1rem 0.5rem',
-            },
-            '.ml-auto': {
-                marginLeft: 'auto',
-            },
-            '.mr-025': {
-                marginRight: '0.25rem',
             },
             '.input-disabled': {
                 opacity: 0.4,
@@ -333,6 +228,7 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BuybackBlock = void 0;
+    const Theme = components_2.Styles.Theme.ThemeVars;
     const maxHeight = '321px';
     const maxWidth = '690px';
     let BuybackBlock = class BuybackBlock extends components_2.Module {
@@ -380,8 +276,11 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                     return;
                 }
                 try {
+                    this.gridDApp.visible = true;
+                    this.emptyStack.visible = false;
                     this.buybackInfo = await queue_utils_1.getGuaranteedBuyBackInfo(this.data);
                     this.renderBuybackCampaign();
+                    this.renderLeftPart();
                     const firstToken = this.getTokenObject('toTokenAddress');
                     if (firstToken && firstToken.symbol !== ((_a = store_1.ChainNativeTokenByChainId[store_1.getChainId()]) === null || _a === void 0 ? void 0 : _a.symbol)) {
                         await this.initApprovalModelAction();
@@ -657,7 +556,7 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
             };
             this.initEmptyUI = async () => {
                 if (!this.noCampaignSection) {
-                    this.noCampaignSection = await components_2.Panel.create({ height: '100%' });
+                    this.noCampaignSection = await components_2.Panel.create({ width: maxWidth, height: maxHeight });
                 }
                 const isConnected = store_1.isWalletConnected();
                 const isBtnShown = !this.data && isConnected;
@@ -677,8 +576,8 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                     this.initInputFile(importFileElm);
                 }
                 this.noCampaignSection.clearInnerHTML();
-                this.noCampaignSection.appendChild(this.$render("i-panel", { class: "no-buyback", height: "100%", background: { color: '#0c1234' } },
-                    this.$render("i-vstack", { gap: 10, verticalAlignment: "center" },
+                this.noCampaignSection.appendChild(this.$render("i-vstack", { class: "no-buyback", height: "100%", background: { color: '#0c1234' }, verticalAlignment: "center" },
+                    this.$render("i-vstack", { gap: 10, verticalAlignment: "center", horizontalAlignment: "center" },
                         this.$render("i-image", { url: assets_2.default.fullPath('img/staking/TrollTrooper.svg') }),
                         this.$render("i-label", { font: { color: '#FFFFFF' }, caption: isConnected ? 'No Buybacks' : 'Please connect with your wallet!' }),
                         isBtnShown ? (this.$render("i-hstack", { gap: 10, margin: { top: 10 }, verticalAlignment: "center", horizontalAlignment: "center" },
@@ -691,10 +590,12 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                 this.noCampaignSection.visible = true;
             };
             this.renderEmpty = async () => {
+                this.gridDApp.visible = false;
+                this.emptyStack.visible = true;
                 await this.initEmptyUI();
-                if (this.buybackElm) {
-                    this.buybackElm.clearInnerHTML();
-                    this.buybackElm.appendChild(this.noCampaignSection);
+                if (this.emptyStack) {
+                    this.emptyStack.clearInnerHTML();
+                    this.emptyStack.appendChild(this.noCampaignSection);
                 }
                 if (this.loadingElm) {
                     this.loadingElm.visible = false;
@@ -703,12 +604,11 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
             this.renderBuybackCampaign = async () => {
                 if (this.buybackInfo) {
                     this.buybackElm.clearInnerHTML();
-                    const { tokenOut, tokenIn, projectName, queueInfo } = this.buybackInfo;
+                    const { queueInfo, pairAddress } = this.buybackInfo;
                     const info = queueInfo || {};
                     const firstSymbol = store_1.tokenSymbol(this.getValueByKey('toTokenAddress'));
                     const vStackTimer = await components_2.VStack.create({ gap: 4, verticalAlignment: 'center' });
-                    const lbTimer = await components_2.Label.create({ caption: 'Starts In', font: { size: '12px' } });
-                    lbTimer.classList.add('opacity-50');
+                    const lbTimer = await components_2.Label.create({ caption: 'Starts In: ', font: { size: '12px' } });
                     const endHour = await components_2.Label.create();
                     const endDay = await components_2.Label.create();
                     const endMin = await components_2.Label.create();
@@ -724,11 +624,10 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                             this.$render("i-label", { caption: "H", class: "timer-unit" }),
                             endMin,
                             this.$render("i-label", { caption: "M", class: "timer-unit" }))));
-                    const vStackEndTime = await components_2.VStack.create({ gap: 4, verticalAlignment: 'center' });
-                    const lbEndTime = await components_2.Label.create({ caption: 'Estimated End Time', font: { size: '12px' } });
-                    lbEndTime.classList.add('opacity-50');
+                    const vStackEndTime = await components_2.HStack.create({ gap: 4, verticalAlignment: 'center', margin: { top: '0.75rem' } });
+                    const lbEndTime = await components_2.Label.create({ caption: 'Estimated End Time: ', font: { size: '0.875rem', bold: true } });
                     vStackEndTime.appendChild(lbEndTime);
-                    vStackEndTime.appendChild(this.$render("i-label", { caption: global_1.formatDate(info.endDate), font: { size: '16px', bold: true }, lineHeight: "29px" }));
+                    vStackEndTime.appendChild(this.$render("i-label", { caption: global_1.formatDate(info.endDate), font: { size: '0.875rem' } }));
                     let interval;
                     const setTimer = () => {
                         const { startDate, endDate } = info;
@@ -736,8 +635,8 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                         let hours = 0;
                         let mins = 0;
                         if (components_2.moment().isBefore(components_2.moment(startDate))) {
-                            lbTimer.caption = 'Starts In';
-                            lbEndTime.caption = 'Estimated End Time';
+                            lbTimer.caption = 'Starts In: ';
+                            lbEndTime.caption = 'Estimated End Time: ';
                             days = components_2.moment(startDate).diff(components_2.moment(), 'days');
                             hours = components_2.moment(startDate).diff(components_2.moment(), 'hours') - days * 24;
                             mins = components_2.moment(startDate).diff(components_2.moment(), 'minutes') - days * 24 * 60 - hours * 60;
@@ -752,7 +651,7 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                         else {
                             vStackTimer.visible = false;
                             vStackEndTime.visible = true;
-                            lbEndTime.caption = 'Ended On';
+                            lbEndTime.caption = 'Ended On: ';
                             days = hours = mins = 0;
                             clearInterval(interval);
                         }
@@ -765,44 +664,60 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                         setTimer();
                     }, 1000);
                     this.buybackElm.clearInnerHTML();
-                    this.buybackElm.appendChild(this.$render("i-panel", { class: "pnl-buy-back", padding: { bottom: 15, top: 15, right: 15, left: 15 }, height: "auto" },
-                        this.$render("i-hstack", { gap: 10, verticalAlignment: "center", horizontalAlignment: "start", margin: { bottom: 15 } },
-                            this.$render("i-hstack", { width: 50, position: "relative", verticalAlignment: "center" },
-                                this.$render("i-image", { width: 36, height: 36, url: store_1.getTokenIcon(tokenOut), fallbackUrl: store_1.fallBackUrl }),
-                                this.$render("i-image", { width: 24, height: 24, url: store_1.getTokenIcon(tokenIn), fallbackUrl: store_1.fallBackUrl, position: "absolute", bottom: -4, left: 24 })),
-                            this.$render("i-label", { caption: projectName || '', margin: { top: 4 }, font: { size: '20px', color: '#FF6363', name: 'Montserrat Bold', bold: true } })),
-                        this.$render("i-hstack", { gap: 60, width: "100%", verticalAlignment: "center" },
-                            this.$render("i-vstack", { gap: 4, verticalAlignment: "center" },
-                                this.$render("i-label", { caption: "Buyback Price", font: { size: '12px' }, class: "opacity-50" }),
-                                this.$render("i-label", { caption: `${1 / this.getValueByKey('offerPrice')} ${store_1.tokenSymbol(this.getValueByKey('fromTokenAddress'))}`, font: { size: '24px', color: '#72F35D', bold: true }, lineHeight: "29px" })),
-                            vStackTimer,
+                    this.buybackElm.appendChild(this.$render("i-panel", { padding: { bottom: 15, top: 15, right: 15, left: 15 }, height: "auto" },
+                        this.$render("i-vstack", { gap: "0.5rem", width: "100%", verticalAlignment: "center", margin: { bottom: '1rem' } },
+                            this.$render("i-vstack", null,
+                                this.$render("i-hstack", { gap: 4, verticalAlignment: "center" },
+                                    this.$render("i-label", { caption: "Buyback Price: ", font: { bold: true } }),
+                                    this.$render("i-label", { caption: `${1 / this.getValueByKey('offerPrice')} ${store_1.tokenSymbol(this.getValueByKey('fromTokenAddress'))}`, font: { bold: true } })),
+                                this.$render("i-label", { caption: "I don't have a digital wallet", font: { size: '0.8125rem' }, link: { href: 'https://metamask.io/' } })),
                             vStackEndTime),
                         this.$render("i-hstack", { gap: 20, margin: { top: 15 }, verticalAlignment: "center" },
-                            this.$render("i-vstack", { gap: 4, width: "calc(50% - 30px)", height: 90, verticalAlignment: "space-between" },
-                                this.$render("i-vstack", { gap: 4, verticalAlignment: "center" },
-                                    this.$render("i-label", { caption: "You Swap", font: { size: '14px' } }),
-                                    this.$render("i-label", { caption: `Balance: ${global_1.formatNumber(this.getFirstAvailableBalance())} ${firstSymbol}`, font: { size: '12px' }, class: "opacity-50", margin: { left: 'auto' } })),
-                                this.$render("i-hstack", { id: "firstInputBox", gap: 8, width: "100%", height: 50, verticalAlignment: "center", background: { color: '#232B5A' }, border: { radius: 16, width: 2, style: 'solid', color: 'transparent' }, padding: { left: 7, right: 7 } },
+                            this.$render("i-vstack", { gap: 4, width: "100%", verticalAlignment: "space-between" },
+                                this.$render("i-hstack", { gap: 4, horizontalAlignment: "end" },
+                                    this.$render("i-label", { caption: `Balance: ${global_1.formatNumber(this.getFirstAvailableBalance())} ${firstSymbol}`, font: { size: '0.75rem' } })),
+                                this.$render("i-hstack", { id: "firstInputBox", visible: false, gap: 8, width: "100%", height: 50, verticalAlignment: "center", background: { color: '#232B5A' }, border: { radius: 5, width: 2, style: 'solid', color: 'transparent' }, padding: { left: 7, right: 7 } },
                                     this.$render("i-hstack", { gap: 4, width: 100, verticalAlignment: "center" },
                                         this.$render("i-image", { width: 20, height: 20, url: store_1.getTokenIcon(this.getValueByKey('toTokenAddress')), fallbackUrl: store_1.fallBackUrl }),
-                                        this.$render("i-label", { caption: firstSymbol, font: { size: '16px' } })),
-                                    this.$render("i-input", { id: "firstInput", inputType: "number", placeholder: "0.0", class: "input-amount", width: "100%", height: "100%", onChanged: this.firstInputChange, onFocus: () => this.handleFocusInput(true, true), onBlur: () => this.handleFocusInput(true, false) }))),
-                            this.$render("i-icon", { name: "arrow-right", fill: "#f15e61", width: 20, height: 20, margin: { top: 40 } }),
-                            this.$render("i-vstack", { gap: 4, width: "calc(50% - 30px)", height: 90, verticalAlignment: "space-between" },
-                                this.$render("i-label", { caption: "You Receive", font: { size: '14px' } }),
-                                this.$render("i-hstack", { id: "secondInputBox", width: "100%", height: 50, position: "relative", verticalAlignment: "center", background: { color: '#232B5A' }, border: { radius: 16, width: 2, style: 'solid', color: 'transparent' }, padding: { left: 7, right: 7 } },
+                                        this.$render("i-label", { caption: firstSymbol })),
+                                    this.$render("i-input", { id: "firstInput", inputType: "number", placeholder: "0.0", class: "input-amount", width: "100%", height: "100%", onChanged: this.firstInputChange, onFocus: () => this.handleFocusInput(true, true), onBlur: () => this.handleFocusInput(true, false) })),
+                                this.$render("i-hstack", { id: "secondInputBox", width: "100%", height: 40, position: "relative", verticalAlignment: "center", background: { color: '#fff' }, border: { radius: 5, width: 2, style: 'solid', color: 'transparent' }, padding: { left: 7, right: 7 } },
                                     this.$render("i-hstack", { gap: 4, margin: { right: 8 }, width: 100, verticalAlignment: "center" },
                                         this.$render("i-image", { width: 20, height: 20, url: store_1.getTokenIcon(this.getValueByKey('fromTokenAddress')), fallbackUrl: store_1.fallBackUrl }),
-                                        this.$render("i-label", { caption: store_1.tokenSymbol(this.getValueByKey('fromTokenAddress')), font: { size: '16px' } })),
+                                        this.$render("i-label", { caption: store_1.tokenSymbol(this.getValueByKey('fromTokenAddress')) })),
                                     this.$render("i-input", { id: "secondInput", inputType: "number", placeholder: "0.0", class: "input-amount", width: "100%", height: "100%", onChanged: this.secondInputChange, onFocus: () => this.handleFocusInput(false, true), onBlur: () => this.handleFocusInput(false, false) })))),
-                        this.$render("i-hstack", { gap: 10, margin: { top: 6 }, verticalAlignment: "center", horizontalAlignment: "space-between" },
-                            this.$render("i-label", { caption: "Trade Fee", font: { size: '14px' }, class: "opacity-50" }),
-                            this.$render("i-label", { id: "lbFee", caption: `0 ${firstSymbol}`, font: { size: '14px' } })),
+                        this.$render("i-hstack", { gap: 10, margin: { top: 6 }, verticalAlignment: "center", horizontalAlignment: "end" },
+                            this.$render("i-label", { caption: "Trade Fee", font: { size: '0.75rem' } }),
+                            this.$render("i-label", { id: "lbFee", caption: `0 ${firstSymbol}`, font: { size: '0.75rem' } })),
                         this.$render("i-vstack", { margin: { top: 15 }, verticalAlignment: "center", horizontalAlignment: "center" },
-                            this.$render("i-button", { id: "btnSwap", caption: "Swap", enabled: false, class: "btn-os btn-swap", rightIcon: { spin: true, visible: false }, onClick: this.onSwap }))));
+                            this.$render("i-panel", null,
+                                this.$render("i-button", { id: 'btnSwap', width: '100px', caption: 'Sell', padding: { top: '0.5rem', bottom: '0.5rem', left: '1rem', right: '1rem' }, font: { size: '0.875rem', color: Theme.colors.primary.contrastText }, rightIcon: { visible: false, fill: Theme.colors.primary.contrastText }, onClick: this.onSwap.bind(this) }))),
+                        this.$render("i-vstack", { gap: "0.5rem" },
+                            this.$render("i-vstack", { gap: '0.25rem' },
+                                this.$render("i-label", { caption: 'smart contract:', font: { size: '0.75rem' } }),
+                                this.$render("i-label", { caption: pairAddress, font: { size: '0.75rem' }, overflowWrap: 'anywhere' })),
+                            this.$render("i-label", { caption: 'Terms & Condition', font: { size: '0.75rem' }, link: { href: 'https://docs.scom.dev/' } }))));
                 }
                 else {
                     this.renderEmpty();
+                }
+            };
+            this.renderLeftPart = async () => {
+                if (this.buybackInfo) {
+                    this.leftStack.clearInnerHTML();
+                    const { tokenOut, tokenIn, projectName, description, idoUrl } = this.buybackInfo;
+                    this.leftStack.clearInnerHTML();
+                    this.leftStack.appendChild(this.$render("i-panel", { padding: { bottom: 15, top: 15, right: 15, left: 15 }, height: "auto" },
+                        this.$render("i-vstack", { gap: "1rem", margin: { bottom: 15 }, width: "100%" },
+                            this.$render("i-hstack", { horizontalAlignment: "center" },
+                                this.$render("i-hstack", { position: "relative", verticalAlignment: "center", horizontalAlignment: "center", margin: { bottom: '1.25rem' } },
+                                    this.$render("i-image", { width: 80, height: 80, url: store_1.getTokenIcon(tokenOut), fallbackUrl: store_1.fallBackUrl }),
+                                    this.$render("i-image", { width: 50, height: 50, url: store_1.getTokenIcon(tokenIn), fallbackUrl: store_1.fallBackUrl, position: "absolute", bottom: -15, right: -10 }))),
+                            this.$render("i-label", { caption: projectName || '', margin: { top: '0.5em', bottom: '1em' }, font: { weight: 600 } }),
+                            this.$render("i-label", { caption: description || '', font: { size: '0.875rem' } }),
+                            this.$render("i-hstack", { visible: !!idoUrl, verticalAlignment: 'center', gap: '0.25rem' },
+                                this.$render("i-label", { caption: 'Details here: ', font: { size: '0.875rem' } }),
+                                this.$render("i-label", { font: { size: '0.875rem' }, caption: idoUrl, link: { href: idoUrl } })))));
                 }
             };
             this.init = async () => {
@@ -832,8 +747,6 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
             };
             this.$eventBus = components_2.application.EventBus;
             this.registerEvent();
-        }
-        validateConfig() {
         }
         async getData() {
             return this.data;
@@ -922,19 +835,22 @@ define("@buyback/main", ["require", "exports", "@ijstech/components", "@ijstech/
                 }
             }
             if ((_b = this.btnSwap) === null || _b === void 0 ? void 0 : _b.rightIcon.visible) {
-                return 'Swapping';
+                return 'Selling';
             }
-            return 'Swap';
+            return 'Sell';
         }
         ;
         render() {
             return (this.$render("i-panel", { id: "buybackComponent", class: "pageblock-buyback", minHeight: 200 },
-                this.$render("i-panel", { id: "buybackLayout", class: "buyback-layout", width: maxWidth, height: maxHeight },
+                this.$render("i-panel", { id: "buybackLayout", class: "buyback-layout" },
                     this.$render("i-vstack", { id: "loadingElm", class: "i-loading-overlay" },
                         this.$render("i-vstack", { class: "i-loading-spinner", horizontalAlignment: "center", verticalAlignment: "center" },
                             this.$render("i-icon", { class: "i-loading-spinner_icon", image: { url: assets_2.default.fullPath('img/loading.svg'), width: 36, height: 36 } }),
                             this.$render("i-label", { caption: "Loading...", font: { color: '#FD4A4C', size: '1.5em' }, class: "i-loading-spinner_text" }))),
-                    this.$render("i-panel", { id: "buybackElm", class: "wrapper" }))));
+                    this.$render("i-vstack", { id: "emptyStack", visible: false, verticalAlignment: "center", horizontalAlignment: "center" }),
+                    this.$render("i-grid-layout", { id: 'gridDApp', width: '100%', height: '100%', templateColumns: ['60%', 'auto'] },
+                        this.$render("i-vstack", { id: "leftStack", padding: { top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' } }),
+                        this.$render("i-vstack", { id: "buybackElm", gap: "0.5rem", padding: { top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' }, background: { color: '#f1f1f1' }, verticalAlignment: 'space-between' })))));
         }
     };
     BuybackBlock = __decorate([

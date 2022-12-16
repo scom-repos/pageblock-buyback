@@ -1,4 +1,4 @@
-import { Styles, Module, Panel, Button, Label, VStack, Container, ControlElement, IEventBus, application, customModule, Modal, Input, moment } from '@ijstech/components';
+import { Styles, Module, Panel, Button, Label, VStack, Container, ControlElement, IEventBus, application, customModule, Image, Modal, Input, moment, GridLayout, HStack, Markdown } from '@ijstech/components';
 import { BigNumber, Wallet, WalletPlugin } from '@ijstech/eth-wallet';
 import Assets from '@buyback/assets';
 import { formatNumber, formatDate, PageBlock, EventId, limitInputNumber, limitDecimals, IERC20ApprovalAction, QueueType, ITokenObject } from '@buyback/global';
@@ -9,16 +9,9 @@ import { Result } from '@buyback/result';
 import { PanelConfig } from '@buyback/panel-config';
 import './index.css';
 
+const Theme = Styles.Theme.ThemeVars;
 const maxHeight = '321px';
 const maxWidth = '690px';
-
-declare global {
-	namespace JSX {
-		interface IntrinsicElements {
-			['i-section-buyback']: BuybackBlock
-		}
-	}
-}
 
 @customModule
 export class BuybackBlock extends Module implements PageBlock {
@@ -27,6 +20,10 @@ export class BuybackBlock extends Module implements PageBlock {
 	readonly onConfirm: () => Promise<void>;
 	readonly onDiscard: () => Promise<void>;
 
+	private gridDApp: GridLayout;
+	private leftStack: VStack;
+	private emptyStack: VStack;
+	
 	private pnlConfig: PanelConfig;
 	private $eventBus: IEventBus;
 	private loadingElm: Panel;
@@ -50,10 +47,6 @@ export class BuybackBlock extends Module implements PageBlock {
 	private btnSwap: Button;
 	private approvalModelAction: IERC20ApprovalAction;
 	private isApproveButtonShown: boolean;
-
-	validateConfig() {
-
-	}
 
 	async getData() {
 		return this.data;
@@ -162,9 +155,12 @@ export class BuybackBlock extends Module implements PageBlock {
 			this.renderEmpty();
 			return;
 		}
-    try {
-      this.buybackInfo = await getGuaranteedBuyBackInfo(this.data);
+		try {
+			this.gridDApp.visible = true;
+			this.emptyStack.visible = false;
+			this.buybackInfo = await getGuaranteedBuyBackInfo(this.data);
 			this.renderBuybackCampaign();
+			this.renderLeftPart();
 			const firstToken = this.getTokenObject('toTokenAddress');
 			if (firstToken && firstToken.symbol !== ChainNativeTokenByChainId[getChainId()]?.symbol) {
 				await this.initApprovalModelAction();
@@ -396,9 +392,9 @@ export class BuybackBlock extends Module implements PageBlock {
       }
     }
     if (this.btnSwap?.rightIcon.visible) {
-      return 'Swapping';
+      return 'Selling';
     }
-    return 'Swap';
+    return 'Sell';
   };
 
 	private initApprovalModelAction = async () => {
@@ -484,7 +480,7 @@ export class BuybackBlock extends Module implements PageBlock {
 
 	private initEmptyUI = async () => {
 		if (!this.noCampaignSection) {
-			this.noCampaignSection = await Panel.create({ height: '100%' });
+			this.noCampaignSection = await Panel.create({ width: maxWidth, height: maxHeight });
 		}
 		const isConnected = isWalletConnected();
 		const isBtnShown = !this.data && isConnected;
@@ -504,8 +500,8 @@ export class BuybackBlock extends Module implements PageBlock {
 		}
 		this.noCampaignSection.clearInnerHTML();
 		this.noCampaignSection.appendChild(
-			<i-panel class="no-buyback" height="100%" background={{ color: '#0c1234' }}>
-				<i-vstack gap={10} verticalAlignment="center">
+			<i-vstack class="no-buyback" height="100%" background={{ color: '#0c1234' }} verticalAlignment="center">
+				<i-vstack gap={10} verticalAlignment="center" horizontalAlignment="center">
 					<i-image url={Assets.fullPath('img/staking/TrollTrooper.svg')} />
 					<i-label font={{ color: '#FFFFFF' }} caption={ isConnected ? 'No Buybacks' : 'Please connect with your wallet!' } />
 					{
@@ -525,16 +521,18 @@ export class BuybackBlock extends Module implements PageBlock {
 						) : []
 					}
 				</i-vstack>
-			</i-panel>
+			</i-vstack>
 		);
 		this.noCampaignSection.visible = true;
 	}
 
 	private renderEmpty = async () => {
+		this.gridDApp.visible = false;
+		this.emptyStack.visible = true;
 		await this.initEmptyUI();
-		if (this.buybackElm) {
-			this.buybackElm.clearInnerHTML();
-			this.buybackElm.appendChild(this.noCampaignSection);
+		if (this.emptyStack) {
+			this.emptyStack.clearInnerHTML();
+			this.emptyStack.appendChild(this.noCampaignSection);
 		}
 		if (this.loadingElm) {
 			this.loadingElm.visible = false;
@@ -544,13 +542,12 @@ export class BuybackBlock extends Module implements PageBlock {
 	private renderBuybackCampaign = async () => {
 		if (this.buybackInfo) {
 			this.buybackElm.clearInnerHTML();
-			const { tokenOut, tokenIn, projectName, queueInfo } = this.buybackInfo;
+			const { queueInfo, pairAddress } = this.buybackInfo;
 			const info = queueInfo || {} as any;
 			const firstSymbol = tokenSymbol(this.getValueByKey('toTokenAddress'));
 
 			const vStackTimer = await VStack.create({ gap: 4, verticalAlignment: 'center' });
-			const lbTimer = await Label.create({ caption: 'Starts In', font: {size: '12px'} });
-			lbTimer.classList.add('opacity-50');
+			const lbTimer = await Label.create({ caption: 'Starts In: ', font: { size: '12px' } });
 			const endHour = await Label.create();
 			const endDay = await Label.create();
 			const endMin = await Label.create();
@@ -571,13 +568,10 @@ export class BuybackBlock extends Module implements PageBlock {
 				</i-panel>
 			);
 
-			const vStackEndTime = await VStack.create({ gap: 4, verticalAlignment: 'center' });
-			const lbEndTime = await Label.create({ caption: 'Estimated End Time', font: { size: '12px' } });
-			lbEndTime.classList.add('opacity-50');
+			const vStackEndTime = await HStack.create({ gap: 4, verticalAlignment: 'center', margin: {top: '0.75rem'} });
+			const lbEndTime = await Label.create({ caption: 'Estimated End Time: ', font: { size: '0.875rem', bold: true } });
 			vStackEndTime.appendChild(lbEndTime);
-			vStackEndTime.appendChild(
-				<i-label caption={formatDate(info.endDate)} font={{ size: '16px', bold: true }} lineHeight="29px" />
-			);
+			vStackEndTime.appendChild(<i-label caption={formatDate(info.endDate)} font={{ size: '0.875rem'}} />);
 			let interval: any;
 			const setTimer = () => {
 				const { startDate, endDate } = info;
@@ -585,8 +579,8 @@ export class BuybackBlock extends Module implements PageBlock {
 				let hours = 0;
 				let mins = 0;
 				if (moment().isBefore(moment(startDate))) {
-					lbTimer.caption = 'Starts In';
-					lbEndTime.caption = 'Estimated End Time';
+					lbTimer.caption = 'Starts In: ';
+					lbEndTime.caption = 'Estimated End Time: ';
 					days = moment(startDate).diff(moment(), 'days');
 					hours = moment(startDate).diff(moment(), 'hours') - days * 24;
 					mins = moment(startDate).diff(moment(), 'minutes') - days * 24 * 60 - hours * 60;
@@ -599,7 +593,7 @@ export class BuybackBlock extends Module implements PageBlock {
 				} else {
 					vStackTimer.visible = false;
 					vStackEndTime.visible = true;
-					lbEndTime.caption = 'Ended On';
+					lbEndTime.caption = 'Ended On: ';
 					days = hours = mins = 0;
 					clearInterval(interval);
 				}
@@ -613,45 +607,33 @@ export class BuybackBlock extends Module implements PageBlock {
 			}, 1000);
 			this.buybackElm.clearInnerHTML();
 			this.buybackElm.appendChild(
-				<i-panel class="pnl-buy-back" padding={{ bottom: 15, top: 15, right: 15, left: 15 }} height="auto">
-          <i-hstack gap={10} verticalAlignment="center" horizontalAlignment="start" margin={{ bottom: 15 }} >
-						<i-hstack width={50} position="relative" verticalAlignment="center">
-              <i-image
-                width={36}
-								height={36}
-                url={getTokenIcon(tokenOut)}
-                fallbackUrl={fallBackUrl}
-              />
-              <i-image
-                width={24}
-                height={24}
-                url={getTokenIcon(tokenIn)}
-                fallbackUrl={fallBackUrl}
-								position="absolute"
-								bottom={-4}
-								left={24}
-              />
-            </i-hstack>
-            <i-label caption={projectName || ''} margin={{ top: 4 }} font={{ size: '20px', color: '#FF6363', name: 'Montserrat Bold', bold: true }} />
-          </i-hstack>
-          <i-hstack gap={60} width="100%" verticalAlignment="center">
-						<i-vstack gap={4} verticalAlignment="center">
-              <i-label caption="Buyback Price" font={{ size: '12px' }} class="opacity-50" />
-              <i-label caption={`${1 / this.getValueByKey('offerPrice')} ${tokenSymbol(this.getValueByKey('fromTokenAddress'))}`} font={{ size: '24px', color: '#72F35D', bold: true }} lineHeight="29px" />
+				<i-panel padding={{ bottom: 15, top: 15, right: 15, left: 15 }} height="auto">
+          <i-vstack gap="0.5rem" width="100%" verticalAlignment="center" margin={{bottom: '1rem'}}>
+						<i-vstack>
+							<i-hstack gap={4} verticalAlignment="center">
+								<i-label caption="Buyback Price: " font={{ bold: true }} />
+								<i-label
+									caption={`${1 / this.getValueByKey('offerPrice')} ${tokenSymbol(this.getValueByKey('fromTokenAddress'))}`}
+									font={{ bold: true }}
+								/>
+							</i-hstack>
+							<i-label caption="I don't have a digital wallet" font={{ size: '0.8125rem' }} link={{ href: 'https://metamask.io/' }}></i-label>
 						</i-vstack>
-						{ vStackTimer }
+						{/* { vStackTimer } */}
 						{ vStackEndTime }
-					</i-hstack>
+					</i-vstack>
 					<i-hstack gap={20} margin={{ top: 15 }} verticalAlignment="center">
-						<i-vstack gap={4} width="calc(50% - 30px)" height={90} verticalAlignment="space-between">
-							<i-vstack gap={4} verticalAlignment="center">
-								<i-label caption="You Swap" font={{ size: '14px' }} />
-								<i-label caption={`Balance: ${formatNumber(this.getFirstAvailableBalance())} ${firstSymbol}`} font={{ size: '12px' }} class="opacity-50" margin={{ left: 'auto' }} />
-							</i-vstack>
-							<i-hstack id="firstInputBox" gap={8} width="100%" height={50} verticalAlignment="center" background={{ color: '#232B5A' }} border={{ radius: 16, width: 2, style: 'solid', color: 'transparent' }} padding={{ left: 7, right: 7 }}>
+						<i-vstack gap={4} width="100%" verticalAlignment="space-between">
+							<i-hstack gap={4} horizontalAlignment="end">
+								<i-label
+									caption={`Balance: ${formatNumber(this.getFirstAvailableBalance())} ${firstSymbol}`}
+									font={{ size: '0.75rem' }}
+								/>
+							</i-hstack>
+							<i-hstack id="firstInputBox" visible={false} gap={8} width="100%" height={50} verticalAlignment="center" background={{ color: '#232B5A' }} border={{ radius: 5, width: 2, style: 'solid', color: 'transparent' }} padding={{ left: 7, right: 7 }}>
 								<i-hstack gap={4} width={100} verticalAlignment="center">
 									<i-image width={20} height={20} url={getTokenIcon(this.getValueByKey('toTokenAddress'))} fallbackUrl={fallBackUrl} />
-									<i-label caption={firstSymbol} font={{ size: '16px' }} />
+									<i-label caption={firstSymbol} />
 								</i-hstack>
 								<i-input
 									id="firstInput"
@@ -665,14 +647,10 @@ export class BuybackBlock extends Module implements PageBlock {
 									onBlur={() => this.handleFocusInput(true, false)}
 								/>
 							</i-hstack>
-						</i-vstack>
-						<i-icon name="arrow-right" fill="#f15e61" width={20} height={20} margin={{ top: 40 }} />
-						<i-vstack gap={4} width="calc(50% - 30px)" height={90} verticalAlignment="space-between">
-							<i-label caption="You Receive" font={{ size: '14px' }} />
-							<i-hstack id="secondInputBox" width="100%" height={50} position="relative" verticalAlignment="center" background={{ color: '#232B5A' }} border={{ radius: 16, width: 2, style: 'solid', color: 'transparent' }} padding={{ left: 7, right: 7 }}>
+							<i-hstack id="secondInputBox" width="100%" height={40} position="relative" verticalAlignment="center" background={{ color: '#fff' }} border={{ radius: 5, width: 2, style: 'solid', color: 'transparent' }} padding={{ left: 7, right: 7 }}>
 								<i-hstack gap={4} margin={{ right: 8 }} width={100} verticalAlignment="center">
 									<i-image width={20} height={20} url={getTokenIcon(this.getValueByKey('fromTokenAddress'))} fallbackUrl={fallBackUrl} />
-									<i-label caption={tokenSymbol(this.getValueByKey('fromTokenAddress'))} font={{ size: '16px' }} />
+									<i-label caption={tokenSymbol(this.getValueByKey('fromTokenAddress'))} />
 								</i-hstack>
 								<i-input
 									id="secondInput"
@@ -685,28 +663,82 @@ export class BuybackBlock extends Module implements PageBlock {
 									onFocus={() => this.handleFocusInput(false, true)}
 									onBlur={() => this.handleFocusInput(false, false)}
 								/>
-								{/* <i-label caption="Best Price" class="best-price" /> */}
 							</i-hstack>
 						</i-vstack>
 					</i-hstack>
-					<i-hstack gap={10} margin={{ top: 6 }} verticalAlignment="center" horizontalAlignment="space-between">
-						<i-label caption="Trade Fee" font={{ size: '14px' }} class="opacity-50" />
-						<i-label id="lbFee" caption={`0 ${firstSymbol}`} font={{ size: '14px' }} />
+					<i-hstack gap={10} margin={{ top: 6 }} verticalAlignment="center" horizontalAlignment="end">
+						<i-label caption="Trade Fee" font={{ size: '0.75rem' }} />
+						<i-label id="lbFee" caption={`0 ${firstSymbol}`} font={{ size: '0.75rem' }} />
 					</i-hstack>
 					<i-vstack margin={{ top: 15 }} verticalAlignment="center" horizontalAlignment="center">
-						<i-button
-							id="btnSwap"
-							caption="Swap"
-							enabled={false}
-							class="btn-os btn-swap"
-							rightIcon={{ spin: true, visible: false }}
-							onClick={this.onSwap}
-						/>
+						<i-panel>
+							<i-button
+								id='btnSwap'
+								width='100px'
+								caption='Sell'
+								padding={{ top: '0.5rem', bottom: '0.5rem', left: '1rem', right: '1rem' }}
+								font={{ size: '0.875rem', color: Theme.colors.primary.contrastText }}
+								rightIcon={{ visible: false, fill: Theme.colors.primary.contrastText }}
+								onClick={this.onSwap.bind(this)}
+							></i-button>
+						</i-panel>
+					</i-vstack>
+					<i-vstack gap="0.5rem">
+						<i-vstack gap='0.25rem'>
+							<i-label caption='smart contract:' font={{ size: '0.75rem' }}></i-label>
+							<i-label caption={pairAddress} font={{ size: '0.75rem' }} overflowWrap='anywhere'></i-label>
+						</i-vstack>
+						<i-label caption='Terms & Condition' font={{ size: '0.75rem' }} link={{ href: 'https://docs.scom.dev/' }}></i-label>
 					</i-vstack>
         </i-panel>
 			)
 		} else {
 			this.renderEmpty();
+		}
+	}
+
+	private renderLeftPart = async () => {
+		if (this.buybackInfo) {
+			this.leftStack.clearInnerHTML();
+			const { tokenOut, tokenIn, projectName, description, idoUrl } = this.buybackInfo;
+			this.leftStack.clearInnerHTML();
+			this.leftStack.appendChild(
+				<i-panel padding={{ bottom: 15, top: 15, right: 15, left: 15 }} height="auto">
+					<i-vstack gap="1rem" margin={{ bottom: 15 }} width="100%">
+						<i-hstack horizontalAlignment="center">
+							<i-hstack position="relative" verticalAlignment="center" horizontalAlignment="center" margin={{bottom: '1.25rem'}}>
+								<i-image
+									width={80}
+									height={80}
+									url={getTokenIcon(tokenOut)}
+									fallbackUrl={fallBackUrl}
+								/>
+								<i-image
+									width={50}
+									height={50}
+									url={getTokenIcon(tokenIn)}
+									fallbackUrl={fallBackUrl}
+									position="absolute"
+									bottom={-15}
+									right={-10}
+								/>
+							</i-hstack>
+						</i-hstack>
+						<i-label
+							caption={projectName || ''} margin={{ top: '0.5em', bottom: '1em' }}
+							font={{ weight: 600 }}
+						/>
+						<i-label caption={description || ''} font={{ size: '0.875rem' }} />
+						<i-hstack visible={!!idoUrl} verticalAlignment='center' gap='0.25rem'>
+              <i-label caption='Details here: ' font={{ size: '0.875rem' }}></i-label>
+							<i-label
+								font={{ size: '0.875rem' }} caption={idoUrl}
+								link={{href: idoUrl}}
+							></i-label>
+            </i-hstack>
+          </i-vstack>
+        </i-panel>
+			)
 		}
 	}
 
@@ -739,7 +771,7 @@ export class BuybackBlock extends Module implements PageBlock {
 	render() {
 		return (
 			<i-panel id="buybackComponent" class="pageblock-buyback" minHeight={200}>
-				<i-panel id="buybackLayout" class="buyback-layout" width={maxWidth} height={maxHeight}>
+				<i-panel id="buybackLayout" class="buyback-layout">
 					<i-vstack id="loadingElm" class="i-loading-overlay">
 						<i-vstack class="i-loading-spinner" horizontalAlignment="center" verticalAlignment="center">
 							<i-icon
@@ -752,7 +784,17 @@ export class BuybackBlock extends Module implements PageBlock {
 							/>
 						</i-vstack>
 					</i-vstack>
-					<i-panel id="buybackElm" class="wrapper" />
+					<i-vstack id="emptyStack" visible={false} verticalAlignment="center" horizontalAlignment="center"></i-vstack>
+					<i-grid-layout
+						id='gridDApp'
+						width='100%'
+						height='100%'
+						templateColumns={['60%', 'auto']}
+					>
+						<i-vstack id="leftStack" padding={{ top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' }}></i-vstack>
+						<i-vstack id="buybackElm" gap="0.5rem" padding={{ top: '0.5rem', bottom: '0.5rem', left: '0.5rem', right: '0.5rem' }} background={{ color: '#f1f1f1' }} verticalAlignment='space-between'>
+						</i-vstack>
+					</i-grid-layout>
 				</i-panel>
 			</i-panel>
 		)

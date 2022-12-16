@@ -656,7 +656,7 @@ define("@buyback/panel-config/token-selection/tokenSelection.tsx", ["require", "
                                     token.address && this.checkHasMetaMask ?
                                         this.$render("i-image", { display: "flex", width: 16, height: 16, url: assets_1.default.fullPath('img/swap/metamask.png'), tooltip: { content: 'Add to MetaMask' }, onClick: (target, event) => this.addToMetamask(event, token) })
                                         : []))),
-                        this.$render("i-label", { class: "ml-auto", caption: global_1.formatNumber(token.balance, 4), onClick: () => this.onSelect(token) })),
+                        this.$render("i-label", { margin: { left: 'auto' }, caption: global_1.formatNumber(token.balance, 4), onClick: () => this.onSelect(token) })),
                     token.isNew ? (this.$render("i-hstack", { horizontalAlignment: "center" },
                         this.$render("i-button", { caption: 'Import', class: "btn-import", margin: { top: 10 }, height: 34, onClick: (source, event) => this.showImportTokenModal(event, token) }))) : (this.$render("i-hstack", null)))));
         }
@@ -813,8 +813,8 @@ define("@buyback/panel-config/token-selection/tokenSelection.tsx", ["require", "
                         this.$render("i-grid-layout", { id: "commonTokenList", columnsPerRow: 4, gap: { row: '1rem', column: '1rem' }, class: "common-list", verticalAlignment: "center" })),
                     this.$render("i-panel", { id: "sortBalancePanel", class: "token-header" },
                         this.$render("i-label", { caption: "Token" }),
-                        this.$render("i-panel", { class: "token-section ml-auto", onClick: () => this.sortBalance() },
-                            this.$render("i-label", { class: "mr-1", caption: "Balance" }),
+                        this.$render("i-panel", { class: "token-section", margin: { left: 'auto' }, onClick: () => this.sortBalance() },
+                            this.$render("i-label", { margin: { right: '1rem' }, caption: "Balance" }),
                             this.$render("i-icon", { id: "iconSortUp", class: "icon-sort-up", name: "sort-up" }),
                             this.$render("i-icon", { id: "iconSortDown", class: "icon-sort-down", name: "sort-down" }))),
                     this.$render("i-grid-layout", { id: "tokenList", class: "token-list", columnsPerRow: 1 })),

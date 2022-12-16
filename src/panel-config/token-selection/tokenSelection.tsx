@@ -380,7 +380,7 @@ export class TokenSelection extends Module {
                 </i-hstack>
               </i-panel>
             </i-hstack>
-            <i-label class="ml-auto" caption={formatNumber(token.balance, 4)} onClick={() => this.onSelect(token)}/>
+            <i-label margin={{left: 'auto'}} caption={formatNumber(token.balance, 4)} onClick={() => this.onSelect(token)}/>
           </i-hstack>
           {
             token.isNew ? (
@@ -564,8 +564,8 @@ export class TokenSelection extends Module {
           </i-panel>
           <i-panel id="sortBalancePanel" class="token-header">
             <i-label caption="Token" />
-            <i-panel class="token-section ml-auto" onClick={() => this.sortBalance()}>
-              <i-label class="mr-1" caption="Balance" />
+            <i-panel class="token-section" margin={{left: 'auto'}} onClick={() => this.sortBalance()}>
+              <i-label margin={{right: '1rem'}} caption="Balance" />
               <i-icon id="iconSortUp" class="icon-sort-up" name="sort-up" />
               <i-icon id="iconSortDown" class="icon-sort-down" name="sort-down" />
             </i-panel>

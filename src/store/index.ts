@@ -582,4 +582,8 @@ export const hasMetaMask = function () {
   return Wallet.isInstalled(WalletPlugin.MetaMask);
 }
 
+export interface IContractDetailInfo {
+  address: string;
+}
+
 export * from './data/index'
