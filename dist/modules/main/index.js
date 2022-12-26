@@ -98,6 +98,7 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
                 fontSize: '1rem',
                 fontWeight: 'bold',
                 fontFamily: 'Raleway Bold',
+                padding: '0.5rem',
                 $nest: {
                     'i-icon.loading-icon': {
                         marginInline: '0.25rem',
@@ -194,6 +195,11 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
                         color: '#F15E61',
                         fontSize: '1.25rem',
                         fontWeight: 700,
+                        $nest: {
+                            'span': {
+                                color: '#F15E61'
+                            }
+                        }
                     },
                     '.i-modal_header > i-icon': {
                         fill: `#F15E61 !important`
@@ -202,6 +208,9 @@ define("@buyback/main/index.css.ts", ["require", "exports", "@ijstech/components
                         fontSize: '16px !important'
                     }
                 }
+            },
+            'i-modal .modal': {
+                background: '#192046',
             },
             '#loadingElm.i-loading--active': {
                 marginTop: '2rem',

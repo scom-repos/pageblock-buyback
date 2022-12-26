@@ -1,5 +1,5 @@
 import { Wallet, BigNumber, Utils, Erc20, TransactionReceipt } from "@ijstech/eth-wallet";
-import { Contracts } from "@openswap/sdk";
+import { Contracts } from "@scom/oswap-openswap-contract";
 
 import {
   QueueType,

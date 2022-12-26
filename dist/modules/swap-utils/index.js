@@ -1,4 +1,4 @@
-define("@buyback/swap-utils", ["require", "exports", "@ijstech/eth-wallet", "@openswap/sdk", "@buyback/global", "@buyback/store", "@buyback/queue-utils"], function (require, exports, eth_wallet_1, sdk_1, global_1, store_1, queue_utils_1) {
+define("@buyback/swap-utils", ["require", "exports", "@ijstech/eth-wallet", "@scom/oswap-openswap-contract", "@buyback/global", "@buyback/store", "@buyback/queue-utils"], function (require, exports, eth_wallet_1, oswap_openswap_contract_1, global_1, store_1, queue_utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.registerPairsByAddress = exports.setApprovalModalSpenderAddress = exports.getApprovalModelAction = exports.setERC20AllowanceToZero = exports.getHybridRouterAddress = exports.getRouterAddress = exports.executeSwap = exports.getTradeFeeMap = exports.getExtendedRouteObjData = void 0;
@@ -351,7 +351,7 @@ define("@buyback/swap-utils", ["require", "exports", "@ijstech/eth-wallet", "@op
             if (!bestRouteObj.isRegistered && Address['OSWAP_HybridRouterRegistry']) {
                 for (let i = 0; i < bestRouteObj.pairs.length; i++) {
                     let pair = bestRouteObj.pairs[i];
-                    let hybridRouterRegistry = new sdk_1.Contracts.OSWAP_HybridRouterRegistry(wallet, Address['OSWAP_HybridRouterRegistry']);
+                    let hybridRouterRegistry = new oswap_openswap_contract_1.Contracts.OSWAP_HybridRouterRegistry(wallet, Address['OSWAP_HybridRouterRegistry']);
                     let typeCode = (await hybridRouterRegistry.getTypeCode(pair)).toFixed();
                     if (typeCode === '0')
                         undefinedPairs.push(pair);
@@ -394,7 +394,7 @@ define("@buyback/swap-utils", ["require", "exports", "@ijstech/eth-wallet", "@op
         let result;
         try {
             let Address = getAddresses();
-            let hybridRouter = new sdk_1.Contracts.OSWAP_HybridRouter2(wallet, Address['OSWAP_HybridRouter2']);
+            let hybridRouter = new oswap_openswap_contract_1.Contracts.OSWAP_HybridRouter2(wallet, Address['OSWAP_HybridRouter2']);
             result = await hybridRouter.getAmountsOutStartsWith({
                 amountIn,
                 pair,
@@ -435,7 +435,7 @@ define("@buyback/swap-utils", ["require", "exports", "@ijstech/eth-wallet", "@op
             }
         }
         let hybridRouterAddress = getHybridRouterAddress();
-        let hybridRouter = new sdk_1.Contracts.OSWAP_HybridRouter2(wallet, hybridRouterAddress);
+        let hybridRouter = new oswap_openswap_contract_1.Contracts.OSWAP_HybridRouter2(wallet, hybridRouterAddress);
         let receipt;
         if (!tokenIn.address) {
             let params = {
@@ -517,7 +517,7 @@ define("@buyback/swap-utils", ["require", "exports", "@ijstech/eth-wallet", "@op
     //For testing only
     const setERC20AllowanceToZero = async (token, spenderAddress) => {
         let wallet = store_1.getWallet();
-        let erc20 = new sdk_1.Contracts.ERC20(wallet, token.address);
+        let erc20 = new oswap_openswap_contract_1.Contracts.ERC20(wallet, token.address);
         let receipt = await erc20.approve({
             spender: spenderAddress,
             amount: 0
@@ -553,7 +553,7 @@ define("@buyback/swap-utils", ["require", "exports", "@ijstech/eth-wallet", "@op
     const registerPairsByAddress = async (market, pairAddresses) => {
         let wallet = eth_wallet_1.Wallet.getInstance();
         let registryAddress = getAddresses()["OSWAP_HybridRouterRegistry"];
-        let registry = new sdk_1.Contracts.OSWAP_HybridRouterRegistry(wallet, registryAddress);
+        let registry = new oswap_openswap_contract_1.Contracts.OSWAP_HybridRouterRegistry(wallet, registryAddress);
         let factory = market.map(m => getFactoryAddress(m));
         let pairAddress = pairAddresses;
         return await registry.registerPairsByAddress2({ factory, pairAddress });

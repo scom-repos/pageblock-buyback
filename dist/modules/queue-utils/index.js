@@ -1,4 +1,4 @@
-define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijstech/eth-wallet", "@buyback/store", "@openswap/sdk", "@openswap/chainlink-sdk", "@openswap/oracle-adaptor-sdk", "@ijstech/components"], function (require, exports, global_1, eth_wallet_1, store_1, sdk_1, chainlink_sdk_1, oracle_adaptor_sdk_1, components_1) {
+define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijstech/eth-wallet", "@buyback/store", "@scom/oswap-openswap-contract", "@openswap/chainlink-sdk", "@scom/oswap-oracle-adaptor-contract", "@ijstech/components"], function (require, exports, global_1, eth_wallet_1, store_1, oswap_openswap_contract_1, chainlink_sdk_1, oswap_oracle_adaptor_contract_1, components_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getGuaranteedBuyBackInfo = exports.getGroupQueueTraderDataObj = exports.getLatestOraclePrice = exports.getLiquidityProviderAddress = exports.getGroupQueuePairInfo = exports.getPair = exports.getRangeQueueData = void 0;
@@ -31,7 +31,7 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
         let referencePair = store_1.tokenPriceAMMReference[chainId] && store_1.tokenPriceAMMReference[chainId][token.toLowerCase()];
         if (!referencePair)
             return null;
-        const pairContract = new sdk_1.Contracts.OSWAP_Pair(wallet, referencePair);
+        const pairContract = new oswap_openswap_contract_1.Contracts.OSWAP_Pair(wallet, referencePair);
         let token0 = await pairContract.token0();
         let token1 = await pairContract.token1();
         let reserves = await pairContract.getReserves();
@@ -138,13 +138,13 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
         switch (queueType) {
             case global_1.QueueType.PEGGED_QUEUE:
             case global_1.QueueType.PRIORITY_QUEUE:
-                let priorityQ = new sdk_1.Contracts.OSWAP_OracleFactory(wallet, factoryAddress);
+                let priorityQ = new oswap_openswap_contract_1.Contracts.OSWAP_OracleFactory(wallet, factoryAddress);
                 return await priorityQ.getPair(params);
             case global_1.QueueType.RANGE_QUEUE:
-                let rangeQ = new sdk_1.Contracts.OSWAP_RangeFactory(wallet, factoryAddress);
+                let rangeQ = new oswap_openswap_contract_1.Contracts.OSWAP_RangeFactory(wallet, factoryAddress);
                 return await rangeQ.getPair(params);
             case global_1.QueueType.GROUP_QUEUE:
-                let groupQ = new sdk_1.Contracts.OSWAP_RestrictedFactory(wallet, factoryAddress);
+                let groupQ = new oswap_openswap_contract_1.Contracts.OSWAP_RestrictedFactory(wallet, factoryAddress);
                 return await groupQ.getPair(Object.assign(Object.assign({}, params), { param3: 0 }));
         }
     };
@@ -155,7 +155,7 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
         const nativeToken = store_1.getChainNativeToken(chainId);
         var direction = new eth_wallet_1.BigNumber(tokenIn.address.toLowerCase()).lt(tokenOut.address.toLowerCase());
         let trader = wallet.address;
-        const pairContract = new sdk_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
+        const pairContract = new oswap_openswap_contract_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
         let traderOffer = await pairContract.getTraderOffer({ trader, direction, start: 0, length: 100 });
         let amounts = traderOffer.amountAndPrice.slice(0, traderOffer.amountAndPrice.length / 2);
         let prices = traderOffer.amountAndPrice.slice(traderOffer.amountAndPrice.length / 2, traderOffer.amountAndPrice.length);
@@ -200,7 +200,7 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
         let chainId = store_1.getChainId();
         const nativeToken = store_1.getChainNativeToken(chainId);
         var direction = new eth_wallet_1.BigNumber(tokenIn.address.toLowerCase()).lt(tokenOut.address.toLowerCase());
-        const oracleContract = new sdk_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
+        const oracleContract = new oswap_openswap_contract_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
         let allOffer = await oracleContract.getOffers({ direction, start: 0, length: 100 });
         let amounts = allOffer.amountAndPrice.slice(0, allOffer.amountAndPrice.length / 2);
         let prices = allOffer.amountAndPrice.slice(allOffer.amountAndPrice.length / 2, allOffer.amountAndPrice.length);
@@ -280,17 +280,17 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
     exports.getGroupQueueTraderDataObj = getGroupQueueTraderDataObj;
     const getGroupQueueAllocation = async (traderAddress, offerIndex, pairAddress, tokenIn, tokenOut) => {
         let direction = new eth_wallet_1.BigNumber(tokenIn.address.toLowerCase()).lt(tokenOut.address.toLowerCase());
-        return await new sdk_1.Contracts.OSWAP_RestrictedPair(store_1.getWallet(), pairAddress).traderAllocation({ param1: direction, param2: offerIndex, param3: traderAddress });
+        return await new oswap_openswap_contract_1.Contracts.OSWAP_RestrictedPair(store_1.getWallet(), pairAddress).traderAllocation({ param1: direction, param2: offerIndex, param3: traderAddress });
     };
     const getLatestOraclePrice = async (queueType, token, againstToken) => {
         let tokens = mapTokenObjectSet({ token, againstToken });
         let wallet = store_1.getWallet();
         let address = getFactoryAddress(queueType);
-        let factory = new sdk_1.Contracts.OSWAP_OracleFactory(wallet, address);
+        let factory = new oswap_openswap_contract_1.Contracts.OSWAP_OracleFactory(wallet, address);
         let oracleAdapterAddress = await factory.oracles({ param1: tokens.token.address, param2: tokens.againstToken.address });
         let price = '0';
         try {
-            const oracleAdaptorContract = new oracle_adaptor_sdk_1.Contracts.OSWAP_OracleChainlink(wallet, oracleAdapterAddress);
+            const oracleAdaptorContract = new oswap_oracle_adaptor_contract_1.Contracts.OSWAP_OracleChainlink(wallet, oracleAdapterAddress);
             price = (await oracleAdaptorContract.getLatestPrice({
                 from: tokens.token.address,
                 to: tokens.againstToken.address,
@@ -309,7 +309,7 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
         const MAX_DUR = "RestrictedPair.maxDur";
         let wallet = store_1.getWallet();
         const address = getAddressByKey(ConfigStore);
-        const configStoreContract = new sdk_1.Contracts.OSWAP_ConfigStore(wallet, address);
+        const configStoreContract = new oswap_openswap_contract_1.Contracts.OSWAP_ConfigStore(wallet, address);
         let feePerOrderRaw = await configStoreContract.customParam(eth_wallet_1.Utils.stringToBytes32(FEE_PER_ORDER).toString());
         let feePerOrder = eth_wallet_1.Utils.fromDecimals(feePerOrderRaw).toString();
         let feePerTraderRaw = await configStoreContract.customParam(eth_wallet_1.Utils.stringToBytes32(FEE_PER_TRADER).toString());
@@ -332,8 +332,8 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
         if (tokenAddress == nativeToken.symbol)
             tokenAddress = WETH9Address;
         const factoryAddress = getFactoryAddress(global_1.QueueType.GROUP_QUEUE);
-        const factoryContract = new sdk_1.Contracts.OSWAP_RestrictedFactory(wallet, factoryAddress);
-        const groupPair = new sdk_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
+        const factoryContract = new oswap_openswap_contract_1.Contracts.OSWAP_RestrictedFactory(wallet, factoryAddress);
+        const groupPair = new oswap_openswap_contract_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
         let token0Address = await groupPair.token0();
         let token1Address = await groupPair.token1();
         let token0 = getTokenObjectByAddress(token0Address);
@@ -438,7 +438,7 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
             wallet.provider = wallet.networksMap[chainId].rpcUrls[0];
         const nativeToken = store_1.getChainNativeToken(chainId);
         const WETH9Address = getAddressByKey('WETH9');
-        const oracleContract = new sdk_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
+        const oracleContract = new oswap_openswap_contract_1.Contracts.OSWAP_RestrictedPair(wallet, pairAddress);
         let token0Address = await oracleContract.token0();
         let token1Address = await oracleContract.token1();
         let direction;
@@ -508,7 +508,7 @@ define("@buyback/queue-utils", ["require", "exports", "@buyback/global", "@ijste
         if (!tokenB.address)
             tokenB = getWETH(chainId);
         let direction = (new eth_wallet_1.BigNumber(tokenA.address.toLowerCase()).lt(tokenB.address.toLowerCase()));
-        let rangePair = new sdk_1.Contracts.OSWAP_RangePair(wallet, pair);
+        let rangePair = new oswap_openswap_contract_1.Contracts.OSWAP_RangePair(wallet, pair);
         let offers = await rangePair.getOffers({
             direction,
             start: 0,

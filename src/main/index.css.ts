@@ -105,6 +105,7 @@ Styles.cssRule('.pageblock-buyback', {
       fontSize: '1rem',
       fontWeight: 'bold',
       fontFamily: 'Raleway Bold',
+      padding: '0.5rem',
       $nest: {
         'i-icon.loading-icon': {
           marginInline: '0.25rem',
@@ -201,6 +202,11 @@ Styles.cssRule('.pageblock-buyback', {
           color: '#F15E61',
           fontSize: '1.25rem',
           fontWeight: 700,
+          $nest: {
+            'span': {
+              color: '#F15E61'
+            }
+          }
         },
         '.i-modal_header > i-icon': {
           fill: `#F15E61 !important`
@@ -209,6 +215,9 @@ Styles.cssRule('.pageblock-buyback', {
           fontSize: '16px !important'
         }
       }
+    },
+    'i-modal .modal': {
+      background: '#192046',
     },
     '#loadingElm.i-loading--active': {
       marginTop: '2rem',
