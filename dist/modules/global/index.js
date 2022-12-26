@@ -297,7 +297,7 @@ define("@buyback/global/utils/pageBlock.ts", ["require", "exports"], function (r
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
 });
-define("@buyback/global/utils/common.ts", ["require", "exports", "@ijstech/eth-wallet", "@openswap/sdk"], function (require, exports, eth_wallet_2, sdk_1) {
+define("@buyback/global/utils/common.ts", ["require", "exports", "@ijstech/eth-wallet", "@scom/oswap-openswap-contract"], function (require, exports, eth_wallet_2, oswap_openswap_contract_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.getERC20Allowance = exports.approveERC20Max = exports.getERC20Amount = exports.registerSendTxEvents = exports.isTransactionConfirmed = void 0;
@@ -331,7 +331,7 @@ define("@buyback/global/utils/common.ts", ["require", "exports", "@ijstech/eth-w
     const approveERC20Max = async (token, spenderAddress, callback, confirmationCallback) => {
         let wallet = eth_wallet_2.Wallet.getInstance();
         let amount = new eth_wallet_2.BigNumber(2).pow(256).minus(1);
-        let erc20 = new sdk_1.Contracts.ERC20(wallet, token.address);
+        let erc20 = new oswap_openswap_contract_1.Contracts.ERC20(wallet, token.address);
         exports.registerSendTxEvents({
             transactionHash: callback,
             confirmation: confirmationCallback
@@ -347,7 +347,7 @@ define("@buyback/global/utils/common.ts", ["require", "exports", "@ijstech/eth-w
         if (!(token === null || token === void 0 ? void 0 : token.address))
             return null;
         let wallet = eth_wallet_2.Wallet.getInstance();
-        let erc20 = new sdk_1.Contracts.ERC20(wallet, token.address);
+        let erc20 = new oswap_openswap_contract_1.Contracts.ERC20(wallet, token.address);
         let allowance = await erc20.allowance({
             owner: wallet.account.address,
             spender: spenderAddress

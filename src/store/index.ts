@@ -8,7 +8,7 @@ import {
   INetwork,
   EventId,
 } from '@buyback/global';
-import { Contracts } from "@openswap/sdk";
+import { Contracts } from "@scom/oswap-openswap-contract";
 import Assets from '@buyback/assets';
 import {
   DefaultTokens,
